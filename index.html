@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14543d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Mangaluru Fresh">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icons/mf-192.png">
 
 <title>Mangaluru Fresh — B2B Market Survey</title>
 <style>
@@ -800,6 +807,7 @@ body{background:var(--mf-bg)}
     <input id="loginMobile" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" autocomplete="tel">
     <label style="margin-top:14px">Agent PIN</label>
     <input id="loginPin" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="Enter your PIN" autocomplete="current-password"><button class="btn primary" style="width:100%;margin-top:18px" onclick="login()">Enter Survey App</button>
+    <button id="mfInstallLogin" class="btn secondary mf-install-btn" type="button" onclick="showInstallHelp()" style="width:100%;margin-top:10px">＋ Install / Add to Home Screen</button>
     <p class="sub" style="margin-top:10px;margin-bottom:0">Sign in with your registered mobile number and PIN.</p>
     <div id="loginError" class="error"></div>
   </div>
@@ -815,7 +823,7 @@ body{background:var(--mf-bg)}
     <section id="dashboard">
       <div class="hero">
         <h1>Market Mapping Dashboard</h1>
-<div id="firebaseStatus" class="sub" role="status">Connecting to Firebase…</div><div class="toolbar" style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0"><button type="button" class="pm-secondary" onclick="openProductMaster()">📦 Product Master</button><button type="button" class="pm-secondary" onclick="openReports()">📊 Reports & Export</button><button type="button" class="pm-secondary" onclick="exportSurveysCSV()">⬇ Business Summary CSV</button><button type="button" class="pm-secondary" onclick="exportDemandCSV()">🥬 Product Demand CSV</button><button type="button" class="pm-secondary" onclick="exportFullSurveysCSV()">🗄 Full Survey Backup</button><button id="adminPanelEntry" type="button" class="pm-secondary mf-admin-entry" onclick="openAdminPanel()">🛡 Admin Panel</button><button id="agentMasterEntry" type="button" class="pm-secondary mf-admin-entry" onclick="openAgentMaster()">👥 Agent Master</button></div>
+<div id="firebaseStatus" class="sub" role="status">Connecting to Firebase…</div><div class="toolbar" style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0"><button type="button" class="pm-secondary" onclick="openProductMaster()">📦 Product Master</button><button type="button" class="pm-secondary" onclick="openReports()">📊 Reports & Export</button><button type="button" class="pm-secondary" onclick="exportSurveysCSV()">⬇ Business Summary CSV</button><button type="button" class="pm-secondary" onclick="exportDemandCSV()">🥬 Product Demand CSV</button><button type="button" class="pm-secondary" onclick="exportFullSurveysCSV()">🗄 Full Survey Backup</button><button id="mfInstallDashboard" type="button" class="pm-secondary" onclick="showInstallHelp()">📲 Install App</button><button id="adminPanelEntry" type="button" class="pm-secondary mf-admin-entry" onclick="openAdminPanel()">🛡 Admin Panel</button><button id="agentMasterEntry" type="button" class="pm-secondary mf-admin-entry" onclick="openAgentMaster()">👥 Agent Master</button></div>
         <p>Collect structured procurement intelligence from Mangaluru B2B buyers.</p>
       </div>
       <div class="stats">
@@ -1606,6 +1614,50 @@ function toggleCreditPeriod(){
   if(wrap)wrap.classList.toggle('hidden',!needsCredit);
   if(period){period.required=needsCredit;if(!needsCredit)period.value='';}
 }
+</script>
+
+
+<div id="mfInstallModal" class="mf-install-modal hidden" role="dialog" aria-modal="true" aria-labelledby="mfInstallTitle">
+  <div class="mf-install-panel">
+    <button type="button" class="mf-install-close" aria-label="Close" onclick="hideInstallHelp()">×</button>
+    <div class="mf-install-icon">MF</div>
+    <h2 id="mfInstallTitle">Install Mangaluru Fresh</h2>
+    <p class="mf-install-intro">Add the app to your phone's home screen for quick access.</p>
+    <button id="mfInstallAction" type="button" class="btn primary mf-install-action hidden" onclick="installMangaluruFresh()">Install app</button>
+    <div id="mfInstallInstructions" class="mf-install-instructions"></div>
+    <p class="mf-install-note">For installation, open the published HTTPS website—not a downloaded HTML file. The install prompt appears only when the browser supports it.</p>
+  </div>
+</div>
+<style id="mf-install-ui-styles">
+.mf-install-btn{border:1px solid #d7e5dc!important;background:#f5faf6!important;color:#174d38!important;font-weight:750!important}
+.mf-install-modal{position:fixed;inset:0;z-index:9999;background:rgba(12,28,20,.55);display:flex;align-items:center;justify-content:center;padding:18px}
+.mf-install-modal.hidden{display:none!important}.mf-install-panel{position:relative;width:min(100%,390px);max-height:min(82vh,650px);overflow:auto;background:#fff;border:1px solid #dce8e0;border-radius:20px;padding:22px;box-shadow:0 20px 70px rgba(0,0,0,.22)}
+.mf-install-close{position:absolute;right:12px;top:10px;border:0;border-radius:10px;background:#eef3ef;width:36px;height:36px;font-size:24px;color:#174d38}
+.mf-install-icon{width:54px;height:54px;border-radius:15px;background:#14543d;color:#fff;display:grid;place-items:center;font-weight:900;font-size:18px;margin-bottom:13px}
+.mf-install-panel h2{font-size:20px;margin:0 40px 6px 0;color:#173b2b}.mf-install-intro,.mf-install-note{font-size:13px;line-height:1.5;color:#64746a}.mf-install-action{width:100%;margin:8px 0 12px}.mf-install-instructions{font-size:13px;line-height:1.55}.mf-install-instructions ol{padding-left:20px;margin:8px 0}.mf-install-instructions li{margin:7px 0}.mf-install-note{border-top:1px solid #e6ede8;padding-top:11px;margin:14px 0 0}
+@media(max-width:600px){.mf-install-panel{padding:18px;border-radius:17px}.mf-install-panel h2{font-size:18px}}
+</style>
+<script>
+let mfDeferredInstallPrompt=null;
+function mfIsIos(){return /iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)}
+function mfIsAndroid(){return /android/i.test(navigator.userAgent)}
+function mfIsStandalone(){return window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true}
+window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();mfDeferredInstallPrompt=event;const b=document.getElementById('mfInstallAction');if(b){b.classList.remove('hidden');b.textContent='Install app'}});
+window.addEventListener('appinstalled',()=>{mfDeferredInstallPrompt=null;const i=document.getElementById('mfInstallInstructions');if(i)i.textContent='Mangaluru Fresh has been installed. You can open it from your home screen.';const b=document.getElementById('mfInstallAction');if(b)b.classList.add('hidden')});
+function showInstallHelp(){
+ const modal=document.getElementById('mfInstallModal'),inst=document.getElementById('mfInstallInstructions'),action=document.getElementById('mfInstallAction');if(!modal||!inst)return;
+ modal.classList.remove('hidden');action?.classList.toggle('hidden',!mfDeferredInstallPrompt);
+ if(mfIsStandalone()){inst.innerHTML='<p><strong>Already installed.</strong> Mangaluru Fresh is running as an installed app.</p>';if(action)action.classList.add('hidden')}
+ else if(mfIsIos()){inst.innerHTML='<p><strong>Install on iPhone / iPad</strong></p><ol><li>Open this site in <strong>Safari</strong>.</li><li>Tap the <strong>Share</strong> icon (square with an arrow).</li><li>Scroll and choose <strong>Add to Home Screen</strong>.</li><li>Tap <strong>Add</strong>.</li></ol><p>iOS does not show the Android-style install prompt; use the Safari Share menu.</p>'}
+ else if(mfDeferredInstallPrompt){inst.innerHTML='<p>Tap <strong>Install app</strong> above and confirm the browser prompt.</p>'}
+ else if(mfIsAndroid()){inst.innerHTML='<p><strong>Install on Android</strong></p><ol><li>Open the published website in <strong>Chrome</strong>.</li><li>Tap the three-dot menu <strong>⋮</strong>.</li><li>Choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li><li>Confirm <strong>Install</strong> or <strong>Add</strong>.</li></ol><p>If the option is missing, the website may need to be published with its PWA files over HTTPS first.</p>'}
+ else {inst.innerHTML='<p><strong>Install on your phone</strong></p><ol><li>Open the published HTTPS site on your phone.</li><li>Use your browser menu and select <strong>Install app</strong> or <strong>Add to Home Screen</strong>.</li></ol><p>On desktop Chrome, use the install icon in the address bar or the browser menu when available.</p>'}
+}
+async function installMangaluruFresh(){if(!mfDeferredInstallPrompt){showInstallHelp();return}mfDeferredInstallPrompt.prompt();try{await mfDeferredInstallPrompt.userChoice}catch(e){}mfDeferredInstallPrompt=null;const b=document.getElementById('mfInstallAction');if(b)b.classList.add('hidden')}
+function hideInstallHelp(){document.getElementById('mfInstallModal')?.classList.add('hidden')}
+document.getElementById('mfInstallModal')?.addEventListener('click',e=>{if(e.target.id==='mfInstallModal')hideInstallHelp()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')hideInstallHelp()});
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('PWA service worker registration failed',err)));
 </script>
 
 </body>

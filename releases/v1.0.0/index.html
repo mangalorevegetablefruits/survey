@@ -1,1 +1,1612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
 
+<title>Mangaluru Fresh — B2B Market Survey</title>
+<style>
+:root{--green:#174d38;--green2:#23684b;--cream:#f7f3e8;--orange:#e8892f;--ink:#17231e;--muted:#66736c;--line:#dfe6e1;--white:#fff;--danger:#b42318}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f3f6f4;color:var(--ink)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{min-height:100vh}.topbar{height:68px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 22px;position:sticky;top:0;z-index:20}
+.brand{font-weight:800;font-size:19px}.brand small{display:block;font-size:10px;letter-spacing:1.4px;opacity:.72;font-weight:600}
+.user-chip{font-size:13px;background:rgba(255,255,255,.12);padding:8px 11px;border-radius:20px}
+.container{max-width:1050px;margin:auto;padding:24px 18px 50px}.hero{background:linear-gradient(135deg,#174d38,#2a7655);color:#fff;border-radius:18px;padding:25px;margin-bottom:20px}
+.hero h1{margin:0 0 6px;font-size:27px}.hero p{margin:0;opacity:.84}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}.stat{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px}.stat b{font-size:25px;display:block}.stat span{font-size:12px;color:var(--muted)}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px;box-shadow:0 3px 12px rgba(17,38,27,.04)}
+.card h2{font-size:18px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.full{grid-column:1/-1}
+label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}label span{font-weight:500;color:var(--muted)}
+input,select,textarea{width:100%;border:1px solid #ccd7d1;border-radius:10px;padding:11px 12px;background:#fff;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(35,104,75,.1)}
+textarea{min-height:85px;resize:vertical}.choices{display:flex;flex-wrap:wrap;gap:8px}.choice{border:1px solid #ccd7d1;background:#fff;border-radius:999px;padding:9px 12px;font-size:13px}.choice.active{background:#e7f2ec;border-color:var(--green2);color:var(--green);font-weight:700}
+.stepper{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;width:100%;margin-bottom:18px;padding-bottom:0;overflow:visible}.step{min-width:0;width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center;border:0;cursor:pointer;border-radius:999px;padding:9px 3px;background:#e8eeeb;color:#66736c;font-size:clamp(9px,2.5vw,12px);font-weight:700;line-height:1.15;transition:background .15s,color .15s}.step:focus-visible{outline:2px solid var(--green);outline-offset:2px}.step.active{background:var(--green);color:#fff}
+.actions{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.btn{border:0;border-radius:11px;padding:12px 17px;font-weight:800}.primary{background:var(--green);color:#fff}.secondary{background:#e8eeeb;color:var(--ink)}.danger{background:#fff0ef;color:var(--danger)}
+.product-row{display:grid;grid-template-columns:1.5fr .7fr .65fr .9fr auto;gap:8px;align-items:end;margin-bottom:9px}.remove{height:42px;width:42px;border:1px solid #e2c4c0;background:#fff5f4;color:var(--danger);border-radius:10px}
+.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{text-align:left;padding:11px;border-bottom:1px solid var(--line);white-space:nowrap}.table th{font-size:11px;text-transform:uppercase;color:var(--muted)}
+.login{min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#edf4ef,#f8f4e9)}.login-card{width:min(430px,100%);background:#fff;border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:0 18px 50px rgba(20,50,35,.1)}.logo-box{width:52px;height:52px;border-radius:14px;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:900;font-size:20px;margin-bottom:17px}
+.hidden{display:none!important}.error{color:var(--danger);font-size:13px;margin-top:8px}.success{background:#e9f7ee;border:1px solid #b9dec6;color:#155b35;padding:15px;border-radius:12px;margin-bottom:16px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.stats{grid-template-columns:1fr 1fr 1fr}.container{padding:15px 12px 35px}.topbar{padding:0 13px}.hero{padding:20px}.hero h1{font-size:23px}.product-row{grid-template-columns:1.5fr .8fr .7fr .9fr auto}}
+@media(max-width:470px){.product-row{grid-template-columns:1fr 1fr}.product-row .remove{grid-column:2;width:100%}.stats .stat{padding:12px 10px}.stat b{font-size:21px}}
+
+/* Final mobile report layout: no internal scrollbars; tables become readable record cards. */
+#reports, #reports * { box-sizing:border-box; }
+#reports { width:100%; max-width:100%; overflow-x:hidden; }
+#reports .table-wrap { width:100%; max-width:100%; overflow:visible!important; }
+#reports .table { width:100%!important; min-width:0!important; max-width:100%; table-layout:fixed!important; }
+#reports .table th, #reports .table td { min-width:0!important; max-width:none!important; overflow-wrap:anywhere; word-break:normal; }
+@media(max-width:600px) {
+  #reports .grid { grid-template-columns:minmax(0,1fr)!important; gap:10px!important; }
+  #reports .table-wrap { border:0; background:transparent; margin-bottom:12px; }
+  #reports .table, #reports .table tbody { display:block!important; }
+  #reports .table thead { display:none!important; }
+  #reports .table tr { display:block!important; width:100%; margin:0 0 10px; border:1px solid #e2eae4; border-radius:12px; background:#fff!important; overflow:hidden; }
+  #reports .table td { display:grid!important; grid-template-columns:minmax(92px,36%) minmax(0,1fr); gap:9px; width:100%!important; padding:9px 11px!important; border-bottom:1px solid #edf1ee!important; text-align:left!important; line-height:1.4; font-size:12px!important; }
+  #reports .table td:last-child { border-bottom:0!important; }
+  #reports .table td:before { font-size:10px; line-height:1.35; font-weight:800; color:#617268; text-transform:uppercase; letter-spacing:.25px; overflow-wrap:anywhere; }
+  #reports #marketReport .table td:nth-child(1):before { content:'Item'; }
+  #reports #marketReport .table td:nth-child(2):before { content:'Mentions / surveys'; }
+  #reports .demand-panel .table td:nth-child(1):before { content:'Product'; }
+  #reports .demand-panel .table td:nth-child(2):before { content:'Total captured quantity'; }
+  #reports .demand-panel .table td:nth-child(3):before { content:'Unit'; }
+  #reports .demand-panel .table td:nth-child(4):before { content:'Businesses'; }
+  #reports .demand-panel .table td:nth-child(5):before { content:'Estimated quantity / week'; }
+  #reports .demand-panel .table td:nth-child(6):before { content:'Frequency breakdown'; }
+  #reports #recordsReport .table td:nth-child(1):before { content:'Survey ID'; }
+  #reports #recordsReport .table td:nth-child(2):before { content:'Date'; }
+  #reports #recordsReport .table td:nth-child(3):before { content:'Business'; }
+  #reports #recordsReport .table td:nth-child(4):before { content:'Phone'; }
+  #reports #recordsReport .table td:nth-child(5):before { content:'Category'; }
+  #reports #recordsReport .table td:nth-child(6):before { content:'Area'; }
+  #reports #recordsReport .table td:nth-child(7):before { content:'Agent'; }
+  #reports #recordsReport .table td:nth-child(8):before { content:'Follow-up'; }
+  #reports #recordsReport .table td:nth-child(9):before { content:'Products'; }
+  #reports .report-actions .btn { flex:1 1 100%; width:100%; }
+  #reports .report-stats { grid-template-columns:repeat(2,minmax(0,1fr))!important; }
+}
+
+
+/* Survey records use real cards, not squeezed table columns. */
+#recordsReport, #recordsReport * { box-sizing:border-box; min-width:0; }
+#recordsReport { width:100%; max-width:100%; }
+#recordsReport .survey-record-list { display:grid; grid-template-columns:minmax(0,1fr); gap:12px; width:100%; }
+#recordsReport .survey-record-card { width:100%; max-width:100%; border:1px solid #dfe8e2; border-radius:14px; background:#fff; overflow:hidden; }
+#recordsReport .survey-record-head { padding:13px 14px 11px; background:#f3f7f4; border-bottom:1px solid #e5ece7; }
+#recordsReport .survey-record-title { font-size:15px; font-weight:800; line-height:1.35; color:#174f3b; overflow-wrap:anywhere; }
+#recordsReport .survey-record-meta { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin-top:7px; font-size:11px; color:#607067; }
+#recordsReport .survey-record-id { display:inline-block; padding:3px 7px; border-radius:6px; background:#e2eee7; color:#225b43; font-weight:800; overflow-wrap:anywhere; }
+#recordsReport .survey-record-details { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0; }
+#recordsReport .survey-record-field { padding:10px 12px; border-bottom:1px solid #edf1ee; overflow-wrap:anywhere; }
+#recordsReport .survey-record-field:nth-child(odd) { border-right:1px solid #edf1ee; }
+#recordsReport .survey-record-field span { display:block; margin-bottom:4px; color:#718077; font-size:10px; font-weight:800; letter-spacing:.35px; text-transform:uppercase; }
+#recordsReport .survey-record-field strong { display:block; color:#263a30; font-size:12px; font-weight:600; line-height:1.45; overflow-wrap:anywhere; word-break:normal; }
+#recordsReport .survey-record-products { grid-column:1/-1; border-right:0!important; border-bottom:0; background:#fbfcfb; }
+@media(max-width:350px) { #recordsReport .survey-record-details { grid-template-columns:minmax(0,1fr); } #recordsReport .survey-record-field:nth-child(odd) { border-right:0; } }
+
+
+.report-chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.report-pie-card{min-width:0;padding:14px!important;margin:0!important;overflow:hidden}
+.report-pie-card h3{font-size:15px;margin:0 0 12px;color:#183f32}
+.pie-layout{display:flex;align-items:center;gap:12px;min-width:0}
+.pie-chart{width:112px;height:112px;min-width:112px;border-radius:50%;display:grid;place-items:center;position:relative;box-shadow:inset 0 0 0 1px #ffffff80}
+.pie-chart:before{content:"";position:absolute;inset:24px;background:#fff;border-radius:50%}
+.pie-chart span{position:relative;font-size:16px;font-weight:800;color:#183f32;max-width:70px;overflow:hidden;text-overflow:ellipsis}
+.pie-legend{list-style:none;padding:0;margin:0;min-width:0;flex:1}
+.pie-legend li{display:grid;grid-template-columns:9px minmax(0,1fr) auto;align-items:center;gap:6px;font-size:11px;padding:4px 0;border-bottom:1px solid #edf1ee}
+.pie-dot{width:8px;height:8px;border-radius:50%;display:block}.pie-label{overflow-wrap:anywhere;color:#52635a}.pie-legend strong{font-size:11px;color:#173f31}
+@media(max-width:520px){.report-chart-grid{grid-template-columns:minmax(0,1fr);gap:9px}.report-pie-card{padding:12px!important}.pie-layout{gap:14px}.pie-chart{width:100px;height:100px;min-width:100px}.pie-chart:before{inset:22px}}
+@media print{.report-chart-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.report-pie-card{break-inside:avoid}}
+
+
+/* Structured report hierarchy */
+#reports.reports-page{display:flex;flex-direction:column;gap:14px}
+#reports .report-block{min-width:0;width:100%}
+#reports .report-block-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:4px 2px 10px}
+#reports .report-block-heading h2{margin:2px 0 4px;font-size:19px;line-height:1.25;color:#173f31}
+#reports .report-block-heading .sub{margin:0;font-size:12px;line-height:1.45}
+#reports .report-eyebrow{font-size:10px;font-weight:800;letter-spacing:.8px;color:#6b8074;margin:0 0 4px}
+#reports .report-stats{margin:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+#reports .report-stats .stat{min-width:0;padding:12px 10px;border:1px solid #e0e9e3;border-radius:12px;background:#fff}
+#reports .report-stats .stat b{font-size:22px;line-height:1.15}
+#reports .report-stats .stat span{font-size:11px;line-height:1.3}
+#reports .report-chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0}
+#reports .report-pie-card{border:1px solid #e0e9e3;border-radius:14px;box-shadow:0 2px 8px #183f3208}
+#reports .report-pie-card h3{padding-bottom:9px;border-bottom:1px solid #edf1ee}
+#reports .report-panel{margin:0}
+#reports .report-section-title{align-items:flex-start}
+#reports .report-section-title h2{margin:2px 0 4px}
+#reports #marketReport h3{font-size:14px;margin:18px 0 8px;color:#173f31}
+#reports #marketReport h3:first-child{margin-top:4px}
+@media(max-width:520px){
+ #reports.reports-page{gap:12px}
+ #reports .report-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ #reports .report-stats .stat{padding:11px}
+ #reports .report-stats .stat b{font-size:20px}
+ #reports .report-chart-grid{grid-template-columns:minmax(0,1fr);gap:9px}
+ #reports .report-block-heading h2{font-size:18px}
+ #reports .report-pie-card{padding:12px!important}
+}
+</style>
+<style>
+
+/* Mobile-first usability improvements */
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+html { width: 100%; min-height: 100%; -webkit-text-size-adjust: 100%; }
+body { margin: 0; width: 100%; min-width: 0; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+img, svg, canvas, video { max-width: 100%; }
+button, input, select, textarea { font: inherit; }
+button, [role="button"], input[type="submit"] { touch-action: manipulation; }
+button { min-height: 44px; }
+input, select, textarea { min-height: 44px; max-width: 100%; font-size: 16px; }
+textarea { resize: vertical; }
+@media (max-width: 600px) {
+  body { padding-bottom: env(safe-area-inset-bottom); }
+  main, .app, .app-shell, .container, .wrapper, .screen, .page, .dashboard, .content,
+  #app, #root, #loginScreen, #appScreen, #dashboard, #surveyScreen, #reports {
+    width: 100% !important; max-width: 100% !important; min-width: 0 !important;
+  }
+  .app-header, header, .topbar, .header, nav { max-width: 100%; }
+  .card, .panel, .section, .form-card, .survey-card, .report-card, .analytics-card { min-width: 0; max-width: 100%; }
+  .grid, .form-grid, .fields-grid, .stats-grid, .report-kpis, .pie-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .row, .form-row, .toolbar, .actions, .button-row { flex-wrap: wrap; }
+  table { display: block; width: 100%; overflow-x: auto; }
+  .sticky-actions, .form-actions, .bottom-actions { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+  h1 { font-size: clamp(22px, 6vw, 30px); line-height: 1.15; }
+  h2 { font-size: clamp(18px, 5vw, 24px); }
+  p, label, .muted, .helper { overflow-wrap: anywhere; }
+}
+@media (min-width: 601px) {
+  body { overflow-x: hidden; }
+  .app-shell, .app, .container, .wrapper, .screen, #app, #root { margin-left: auto; margin-right: auto; }
+}
+
+</style>
+<style>
+
+/* Phone-sized app shell: centered on desktop, edge-to-edge on phones */
+html, body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
+  background: #eef2ef;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+body > #app,
+body > #root,
+body > .app,
+body > .app-shell,
+body > .container,
+body > .wrapper,
+body > main,
+body > .screen,
+body > .page {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100dvh;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (min-width: 600px) {
+  body {
+    padding: 20px 0;
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+  body > #app,
+  body > #root,
+  body > .app,
+  body > .app-shell,
+  body > .container,
+  body > .wrapper,
+  body > main,
+  body > .screen,
+  body > .page {
+    min-height: calc(100vh - 40px);
+    height: calc(100vh - 40px);
+    max-height: 900px;
+    overflow-y: auto;
+    border-radius: 26px;
+    box-shadow: 0 18px 60px rgba(18, 43, 31, .18);
+    border: 1px solid rgba(30, 65, 46, .12);
+    background: #f8faf8;
+  }
+}
+@media (max-width: 599px) {
+  body { padding: 0; }
+  body > #app,
+  body > #root,
+  body > .app,
+  body > .app-shell,
+  body > .container,
+  body > .wrapper,
+  body > main,
+  body > .screen,
+  body > .page {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100dvh;
+    height: auto;
+    border-radius: 0;
+    box-shadow: none;
+    border: 0;
+  }
+}
+
+</style>
+<style>
+
+/* Product Master and mobile product picker */
+.pm-screen { display:none; position:fixed; inset:0; z-index:5000; background:#f5f8f5; overflow-y:auto; }
+.pm-screen.pm-open { display:block; }
+.pm-wrap { width:100%; max-width:430px; min-height:100dvh; margin:0 auto; background:#f8faf8; padding:18px 16px calc(24px + env(safe-area-inset-bottom)); }
+.pm-top { display:flex; align-items:center; gap:10px; margin-bottom:18px; }
+.pm-back { width:42px; min-width:42px; border:0; border-radius:13px; background:#e5eee8; color:#174a35; font-size:21px; }
+.pm-heading { flex:1; }
+.pm-heading h2 { margin:0; color:#153b2b; font-size:22px; }
+.pm-heading p { margin:4px 0 0; color:#6b7b72; font-size:12px; }
+.pm-card { background:#fff; border:1px solid #e1e9e3; border-radius:17px; padding:14px; margin-bottom:13px; box-shadow:0 5px 18px rgba(30,60,40,.04); }
+.pm-card h3 { margin:0 0 12px; color:#214936; font-size:14px; }
+.pm-form-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.pm-field { display:flex; flex-direction:column; gap:5px; color:#58685f; font-size:11px; font-weight:700; }
+.pm-field input,.pm-field select { width:100%; min-width:0; min-height:44px; border:1px solid #d9e3dc; border-radius:11px; padding:0 11px; background:#fff; color:#20372a; font-size:16px; }
+.pm-wide { grid-column:1/-1; }
+.pm-primary { width:100%; min-height:46px; border:0; border-radius:12px; background:#176343; color:#fff; font-weight:800; margin-top:12px; }
+.pm-secondary { min-height:36px; padding:0 11px; border:1px solid #dce6de; border-radius:10px; background:#f7faf7; color:#24523b; font-weight:700; }
+.pm-list { display:flex; flex-direction:column; gap:8px; }
+.pm-item { display:flex; align-items:center; gap:10px; padding:10px; border:1px solid #e7ede8; border-radius:12px; }
+.pm-item-main { flex:1; min-width:0; }
+.pm-item-name { font-size:13px; font-weight:800; color:#243b2d; overflow-wrap:anywhere; }
+.pm-item-meta { margin-top:3px; color:#748178; font-size:10px; }
+.pm-badge { display:inline-block; border-radius:999px; padding:4px 7px; background:#edf5ee; color:#226143; font-size:9px; font-weight:800; }
+.pm-search { width:100%; min-height:44px; padding:0 12px; border:1px solid #dce5de; border-radius:12px; font-size:16px; margin-bottom:10px; }
+.pm-pick-list { display:flex; flex-direction:column; gap:7px; max-height:45vh; overflow-y:auto; }
+.pm-pick-row { width:100%; text-align:left; display:flex; align-items:center; gap:10px; padding:11px; min-height:54px; border:1px solid #e1e9e3; border-radius:12px; background:#fff; color:#20372a; }
+.pm-pick-row strong { display:block; font-size:13px; }
+.pm-pick-row small { display:block; margin-top:3px; color:#748178; font-size:10px; }
+.pm-empty { padding:18px 8px; text-align:center; color:#748178; font-size:12px; }
+@media(max-width:360px){.pm-form-grid{grid-template-columns:1fr}.pm-wide{grid-column:auto}}
+
+</style>
+<style>
+
+/* Global text wrapping and overflow safety across every app screen */
+html, body { width:100%; max-width:100%; overflow-x:hidden; }
+*, *::before, *::after { box-sizing:border-box; min-width:0; }
+body, main, section, article, header, footer, nav, aside, div, p, span, label,
+h1, h2, h3, h4, button, a, li, td, th, small, strong, em {
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+button, a, label, p, span, small, strong, td, th { white-space:normal; }
+input, select, textarea { width:100%; max-width:100%; min-width:0; }
+img, video, canvas, svg, iframe { max-width:100%; }
+table { max-width:100%; }
+pre, code { white-space:pre-wrap; overflow-wrap:anywhere; }
+@media (max-width:600px) {
+  .pm-wrap { width:100%; max-width:430px; padding-left:14px; padding-right:14px; }
+  .pm-form-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .pm-item { min-width:0; flex-wrap:wrap; align-items:flex-start; }
+  .pm-item-main { flex:1 1 100%; width:100%; }
+  .pm-item button { flex:1 1 auto; }
+  .pm-pick-row { min-width:0; }
+  .pm-pick-row span { overflow-wrap:anywhere; }
+  .pm-heading h2, .pm-heading p { overflow-wrap:anywhere; }
+  .pm-card, .pm-wrap, .pm-screen { min-width:0; max-width:100%; }
+}
+@media (max-width:360px) {
+  .pm-form-grid { grid-template-columns:minmax(0,1fr); }
+  .pm-wide { grid-column:auto; }
+}
+
+</style>
+<style>
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}.report-table{width:100%}.product-row .p-unit{background:#eef3ef;color:#40584a;font-weight:700}.product-row .p-unit[readonly]{cursor:not-allowed}.report-stat{min-width:0}.report-stat b{overflow-wrap:anywhere}@media print{body{display:block;background:white}.topbar,.hero,.toolbar,.actions,.pm-screen,#loginView,#survey{display:none!important}#reports{display:block!important}.card{break-inside:avoid;box-shadow:none}.table{font-size:10px}}
+</style>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script>
+/* Mangaluru Fresh: Firebase client configuration from the registered web app. */
+const MF_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDMzF6V7NUt2S1KdF69aTZ1ujnPot6wi7s",
+  authDomain: "mangalore-veg-fruits.firebaseapp.com",
+  databaseURL: "https://mangalore-veg-fruits-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "mangalore-veg-fruits",
+  storageBucket: "mangalore-veg-fruits.firebasestorage.app",
+  messagingSenderId: "678617963766",
+  appId: "1:678617963766:web:0f099544ff53680e51a0d7"
+};
+let mfFirebaseReady = false, mfAuth = null, mfDb = null, mfSurveyRef = null, mfProductRef = null;
+let mfSurveyListener = null, mfProductListener = null;
+function mfInitFirebase(){
+  if (mfFirebaseReady) return true;
+  if (!window.firebase) throw new Error('Firebase SDK did not load. Check your internet connection.');
+  const app = firebase.apps.length ? firebase.app() : firebase.initializeApp(MF_FIREBASE_CONFIG);
+  mfAuth = firebase.auth();
+  mfDb = firebase.database();
+  mfSurveyRef = mfDb.ref('mangaluruFresh/surveys');
+  mfProductRef = mfDb.ref('mangaluruFresh/products');
+  mfFirebaseReady = true;
+  window.mfAuth=mfAuth; window.mfDb=mfDb; window.mfSurveyRef=mfSurveyRef; window.mfProductRef=mfProductRef;
+  return true;
+}
+function mfShowLoginError(message){
+  const el=document.getElementById('loginError');
+  if(el) el.textContent=message;
+}
+function mfStartSharedListeners(){
+  if(!mfAuth || !mfAuth.currentUser || !mfDb) return;
+  if(mfSurveyListener) mfSurveyRef.off('value',mfSurveyListener);
+  const status=document.getElementById('firebaseStatus'); if(status)status.textContent='Firebase connected · shared data enabled';
+  mfSurveyListener=snap=>{
+    const val=snap.val()||{};
+    const rows=Object.keys(val).map(k=>({...val[k],firebaseKey:k}));
+    localStorage.setItem('mf_v1_surveys',JSON.stringify(rows));
+    if(document.getElementById('appView') && !document.getElementById('appView').classList.contains('hidden')){
+      renderDashboard();
+      if(!document.getElementById('reports').classList.contains('hidden')){populateReportFilters();renderReports();}
+    }
+  };
+  mfSurveyRef.on('value',mfSurveyListener,err=>{console.error('Survey sync error:',err);const s=document.getElementById('firebaseStatus');if(s)s.textContent='Firebase sync error: '+err.message;});
+  if(mfProductListener) mfProductRef.off('value',mfProductListener);
+  mfProductListener=snap=>{
+    const remote=snap.val();
+    if(remote && typeof remote==='object'){
+      const items=Object.keys(remote).map(k=>({...remote[k],id:remote[k].id||k}));
+      localStorage.setItem('mangaluruFreshProductMasterV1',JSON.stringify(items));
+      window.dispatchEvent(new CustomEvent('mfProductsSynced'));
+      if(window.MangaluruFreshProducts && document.getElementById('pmList')){
+        try{ if(document.getElementById('productMasterScreen').classList.contains('pm-open')) window.openProductMaster(); }catch(e){}
+      }
+    } else if(mfAuth.currentUser && mfProductRef){
+      // Seed the shared catalogue from this app only when the shared node is empty.
+      const local=JSON.parse(localStorage.getItem('mangaluruFreshProductMasterV1')||'null');
+      if(local && local.length) mfProductRef.set(Object.fromEntries(local.map(x=>[x.id,x])));
+    }
+  };
+  mfProductRef.on('value',mfProductListener,err=>{console.error('Product Master sync error:',err);const s=document.getElementById('firebaseStatus');if(s)s.textContent='Product sync error: '+err.message;});
+}
+function mfStopSharedListeners(){
+  if(mfSurveyRef && mfSurveyListener) mfSurveyRef.off('value',mfSurveyListener);
+  if(mfProductRef && mfProductListener) mfProductRef.off('value',mfProductListener);
+  mfSurveyListener=null; mfProductListener=null;
+}
+</script>
+
+
+<style>
+/* Keep admin controls inside the mobile dashboard layout */
+.toolbar { flex-wrap:wrap !important; max-width:100%; }
+.toolbar button { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
+.mf-admin-entry { display:inline-flex; align-items:center; justify-content:center; }
+/* Admin-only navigation stays hidden until an Admin session is confirmed. */
+#agentMasterEntry, #adminPanelEntry { display:none !important; }
+@media(max-width:480px){
+  .toolbar { gap:7px !important; }
+  .toolbar button { flex:1 1 145px; min-width:0; font-size:14px; }
+}
+</style>
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style id="mf-mobile-first-overrides">
+/* Mangaluru Fresh: mobile-first application layout */
+*,*::before,*::after{box-sizing:border-box}
+html{width:100%;max-width:100%;min-height:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{width:100%;max-width:100%;min-height:100dvh;margin:0;overflow-x:hidden}
+button,input,select,textarea{font:inherit;max-width:100%}
+button,a,[role="button"],input[type="checkbox"],input[type="radio"]{touch-action:manipulation}
+button,.btn{min-height:44px}
+input,select,textarea{min-height:44px;min-width:0;width:100%;font-size:16px}
+img,svg,canvas,video{max-width:100%;height:auto}
+table{max-width:100%}
+th,td,p,label,h1,h2,h3,h4,span,div{overflow-wrap:anywhere;word-break:normal}
+.hidden,[hidden]{display:none!important}
+
+/* The application occupies the full phone viewport, including safe areas. */
+#appView,#loginView{width:100%;max-width:100%;min-height:100dvh}
+#appView{overflow-x:hidden}
+header,.app-header,.topbar,.app-topbar{max-width:100%}
+
+/* Main content: one column and no desktop-width containers. */
+main,.main,.content,.container,.dashboard,.page,.screen,.app-content{
+  width:100%;max-width:100%;min-width:0;margin-left:auto;margin-right:auto
+}
+.grid,.cards,.stats,.stat-grid,.dashboard-grid,.form-grid{
+  grid-template-columns:minmax(0,1fr)!important;min-width:0;max-width:100%
+}
+.card,.panel,.section,.modal-card,.report-card{min-width:0;max-width:100%}
+form{width:100%;max-width:100%;min-width:0}
+label{display:block;min-width:0}
+input,select,textarea{box-sizing:border-box}
+
+/* Horizontal toolbar controls wrap instead of escaping the screen. */
+.toolbar,.actions,.button-row,.form-actions,.nav-actions{
+  display:flex;flex-wrap:wrap;gap:8px;max-width:100%;min-width:0
+}
+.toolbar>* ,.actions>* ,.button-row>* ,.form-actions>* ,.nav-actions>*{
+  min-width:0;max-width:100%;white-space:normal
+}
+.toolbar button,.actions button,.button-row button,.form-actions button{
+  flex:1 1 140px
+}
+
+/* Admin and Agent Master become phone-friendly overlays. */
+#mfAdminPanelModal,#mfAgentMasterModal{
+  padding:env(safe-area-inset-top,12px) 12px env(safe-area-inset-bottom,12px);
+  align-items:stretch;justify-content:center;overflow-y:auto
+}
+#mfAdminPanelModal .mf-admin-card,#mfAgentMasterModal .mf-am-card{
+  width:100%;max-width:100%;max-height:calc(100dvh - 24px);margin:auto;
+  border-radius:16px;padding:16px;overflow-y:auto;overscroll-behavior:contain
+}
+#mfAdminPanelModal .mf-admin-grid,#mfAdminPanelModal .mf-admin-statrow,
+#mfAgentMasterModal .mf-am-grid{grid-template-columns:minmax(0,1fr)!important}
+#mfAdminPanelModal .mf-admin-table,#mfAgentMasterModal .mf-am-table{font-size:13px}
+#mfAdminPanelModal .mf-admin-table th,#mfAdminPanelModal .mf-admin-table td,
+#mfAgentMasterModal .mf-am-table th,#mfAgentMasterModal .mf-am-table td{padding:8px}
+
+/* Tables stay inside their card; horizontal scrolling is limited to the table only. */
+.table-wrap,.table-responsive,[style*="overflow:auto"]{max-width:100%;min-width:0}
+.table-wrap table,.table-responsive table{min-width:520px}
+#mfAdminAgentList,#mfAgentList{width:100%;max-width:100%;min-width:0;overflow-x:auto}
+
+/* Full produce checklist: separate fruit and vegetable lists with a quantity field per item. */
+.produce-group{border:1px solid #dfe8e2;border-radius:14px;overflow:hidden;margin:14px 0;background:#fff}
+.produce-group-title{margin:0;padding:13px 14px;background:#edf4ef;color:#174e3a;font-size:16px;font-weight:800}
+.produce-list{padding:0 12px}
+.produce-item{display:grid;grid-template-columns:minmax(0,1fr) 112px;align-items:center;gap:12px;padding:9px 2px;border-bottom:1px solid #edf1ee;min-width:0}
+.produce-item:last-child{border-bottom:0}
+.produce-name{font-weight:600;line-height:1.3;overflow-wrap:anywhere;min-width:0}
+.produce-name-en{display:inline;font-weight:700}
+.produce-name-kn{display:inline;margin-left:7px;color:#52675b;font-weight:500;font-size:14px;line-height:1.5}
+.produce-qty-wrap{display:flex;align-items:center;gap:6px;min-width:0}
+.produce-qty{width:100%;min-width:0;padding:10px 8px;border:1px solid #cfdcd4;border-radius:9px;font-size:16px;background:#fff}
+.produce-kg{font-size:12px;color:#52675b;font-weight:700}
+.produce-summary{position:sticky;bottom:0;background:#fff;border:1px solid #dfe8e2;border-radius:12px;padding:11px 13px;margin:12px 0;color:#174e3a;font-weight:700;box-shadow:0 -4px 14px rgba(20,60,42,.05)}
+@media(max-width:380px){.produce-item{grid-template-columns:minmax(0,1fr) 100px;gap:8px;padding:9px 0}.produce-qty{padding:9px 6px}}
+
+
+/* Compact rapid-entry produce checklist: name and kg field stay side-by-side. */
+#products .produce-item.product-row{
+  display:grid!important;grid-template-columns:minmax(0,1fr) 92px!important;align-items:center;gap:6px;
+  padding:5px 2px;min-width:0;max-width:100%;
+}
+#products .produce-name{font-size:13px;line-height:1.2;font-weight:600;overflow-wrap:anywhere}
+#products .produce-name-en{font-weight:700}
+#products .produce-name-kn{font-size:12px;margin-left:4px;line-height:1.2}
+#products .produce-qty-wrap{gap:3px}
+#products .produce-qty{height:36px;min-height:36px;padding:5px 6px;border-radius:7px;font-size:16px}
+#products .produce-kg{font-size:11px}
+#products .produce-group{margin:8px 0;border-radius:10px}
+#products .produce-group-title{padding:8px 10px;font-size:14px}
+#products .produce-list{padding:0 8px}
+#products .produce-summary{padding:8px 10px;margin:8px 0;font-size:13px}
+@media(max-width:380px){#products .produce-item.product-row{grid-template-columns:minmax(0,1fr) 84px!important;gap:5px;padding:4px 1px}#products .produce-name{font-size:12px}#products .produce-name-kn{font-size:11px}}
+
+/* Product demand rows stack vertically on phones. */
+.product-row,.demand-row,.product-demand-row{display:grid;grid-template-columns:minmax(0,1fr)!important;gap:8px;min-width:0;max-width:100%}
+.product-row>*,.demand-row>*,.product-demand-row>*{width:100%;min-width:0;max-width:100%}
+
+/* Phone-size breakpoints */
+@media(max-width:480px){
+  body{font-size:16px}
+  h1{font-size:clamp(24px,7vw,32px);line-height:1.15}
+  h2{font-size:clamp(21px,6vw,27px);line-height:1.2}
+  h3{font-size:19px;line-height:1.25}
+  .card,.panel,.section{padding:14px!important}
+  .toolbar button,.actions button,.button-row button,.form-actions button{flex:1 1 100%}
+  button,.btn{min-height:46px}
+  .modal,.dialog{width:100%;max-width:100%;margin:0}
+  #loginView{padding:16px!important}
+  #loginView>*,#loginView .login-card{width:100%;max-width:100%}
+}
+@media(min-width:481px){
+  /* Keep desktop browser previews phone-sized, while real phones remain edge-to-edge. */
+  body{background:#eef3ef}
+  #appView,#loginView{max-width:430px;min-height:100dvh;margin:0 auto}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+
+
+<style id="mf-mobile-modal-fix">
+/* Modal must follow the app's phone width, not the desktop browser viewport. */
+#mfAgentMasterModal,#mfAdminPanelModal{
+  position:fixed!important;inset:0!important;width:100%!important;height:100%!important;
+  min-width:0!important;box-sizing:border-box!important;padding:10px!important;
+  display:none;align-items:center!important;justify-content:center!important;
+  overflow:hidden!important;z-index:10000!important
+}
+#mfAgentMasterModal .mf-am-card,#mfAdminPanelModal .mf-admin-card{
+  box-sizing:border-box!important;width:100%!important;min-width:0!important;max-width:430px!important;
+  height:auto!important;max-height:calc(100dvh - 20px)!important;margin:0!important;
+  padding:16px!important;border-radius:18px!important;overflow-x:hidden!important;overflow-y:auto!important;
+  overscroll-behavior:contain!important
+}
+#mfAgentMasterModal .mf-am-card>div:first-child,
+#mfAdminPanelModal .mf-admin-card>div:first-child{
+  position:sticky;top:-16px;z-index:2;background:#fff;padding:4px 0 10px
+}
+#mfAgentMasterModal .mf-am-card h2,#mfAdminPanelModal .mf-admin-card h2{font-size:23px;line-height:1.2}
+#mfAgentMasterModal .mf-am-card form,#mfAdminPanelModal .mf-admin-card form{display:block;width:100%;min-width:0}
+#mfAgentMasterModal .mf-am-card input,#mfAgentMasterModal .mf-am-card select,
+#mfAdminPanelModal .mf-admin-card input,#mfAdminPanelModal .mf-admin-card select{
+  width:100%!important;min-width:0!important;max-width:100%!important;font-size:16px!important
+}
+#mfAgentMasterModal .mf-am-card button,#mfAdminPanelModal .mf-admin-card button{
+  min-height:44px;max-width:100%;white-space:normal;overflow-wrap:anywhere
+}
+#mfAgentMasterModal .mf-am-card>div[style*="display:flex"],
+#mfAdminPanelModal .mf-admin-card>div[style*="display:flex"]{flex-wrap:wrap!important;min-width:0}
+#mfAgentMasterModal #mfAgentList,#mfAdminPanelModal #mfAdminAgentList{
+  overflow:visible!important;width:100%!important;max-width:100%!important;min-width:0!important
+}
+/* Convert directory rows into stacked mobile cards instead of a wide desktop table. */
+#mfAgentMasterModal .mf-am-table,
+#mfAdminPanelModal .mf-admin-table{display:block!important;width:100%!important;min-width:0!important;border-collapse:separate!important}
+#mfAgentMasterModal .mf-am-table thead,
+#mfAdminPanelModal .mf-admin-table thead{display:none!important}
+#mfAgentMasterModal .mf-am-table tbody,
+#mfAdminPanelModal .mf-admin-table tbody{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:10px!important;width:100%!important}
+#mfAgentMasterModal .mf-am-table tr,
+#mfAdminPanelModal .mf-admin-table tr{
+  display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:5px!important;
+  width:100%!important;min-width:0!important;padding:12px!important;
+  border:1px solid #dfe8e2!important;border-radius:12px!important;background:#f8fbf9!important
+}
+#mfAgentMasterModal .mf-am-table td,
+#mfAdminPanelModal .mf-admin-table td{
+  display:block!important;width:100%!important;min-width:0!important;padding:2px 0!important;
+  border:0!important;overflow-wrap:anywhere!important
+}
+#mfAgentMasterModal .mf-am-table td:nth-child(1)::before{content:"Agent ID: ";font-weight:700}
+#mfAgentMasterModal .mf-am-table td:nth-child(2)::before{content:"Name: ";font-weight:700}
+#mfAgentMasterModal .mf-am-table td:nth-child(3)::before{content:"Role: ";font-weight:700}
+#mfAgentMasterModal .mf-am-table td:nth-child(4)::before{content:"Status: ";font-weight:700}
+#mfAgentMasterModal .mf-am-table td:nth-child(5){display:flex!important;gap:8px;flex-wrap:wrap}
+#mfAdminPanelModal .mf-admin-table td:nth-child(1)::before{content:"ID: ";font-weight:700}
+#mfAdminPanelModal .mf-admin-table td:nth-child(2)::before{content:"Name: ";font-weight:700}
+#mfAdminPanelModal .mf-admin-table td:nth-child(3)::before{content:"Role: ";font-weight:700}
+#mfAdminPanelModal .mf-admin-table td:nth-child(4)::before{content:"Status: ";font-weight:700}
+#mfAdminPanelModal .mf-admin-table td:nth-child(5){display:flex!important;gap:8px;flex-wrap:wrap}
+#mfAgentMasterModal .mf-am-table td button,#mfAdminPanelModal .mf-admin-table td button{flex:1 1 100px}
+#mfAdminPanelModal .mf-admin-statrow{grid-template-columns:minmax(0,1fr)!important}
+#mfAdminPanelModal .mf-admin-stat{min-width:0}
+@media(max-width:480px){
+  #mfAgentMasterModal,#mfAdminPanelModal{padding:0!important;align-items:stretch!important;justify-content:stretch!important}
+  #mfAgentMasterModal .mf-am-card,#mfAdminPanelModal .mf-admin-card{
+    width:100%!important;max-width:none!important;height:100dvh!important;max-height:100dvh!important;
+    border-radius:0!important;padding:calc(env(safe-area-inset-top,0px) + 12px) 14px calc(env(safe-area-inset-bottom,0px) + 14px)!important
+  }
+}
+@media(min-width:481px){
+  /* Desktop is only a phone preview: overlays stay inside that same 430px phone frame. */
+  #mfAgentMasterModal,#mfAdminPanelModal{left:50%!important;right:auto!important;transform:translateX(-50%);width:min(430px,100vw)!important}
+}
+</style>
+
+
+<style>
+/* Reports-only visual refinement: no data logic or other screens changed */
+#reports.reports-page{display:block;min-width:0;color:#17231e}
+#reports .card{border:1px solid #e0e7e2;border-radius:18px;background:#fff;box-shadow:0 5px 18px rgba(22,55,37,.045);padding:18px;margin-bottom:15px;min-width:0}
+#reports .report-header-card{background:linear-gradient(145deg,#fff 0%,#f7faf8 100%);border-color:#dce8df;padding:20px}
+#reports .report-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+#reports .report-eyebrow{font-size:10px;letter-spacing:1.45px;font-weight:800;color:#39805b;margin:0 0 7px}
+#reports .report-heading h2{font-size:23px;line-height:1.2;letter-spacing:-.45px;margin:0 0 7px;color:#173e2e}
+#reports .report-heading .sub{margin:0;line-height:1.5}
+#reports .report-back{white-space:nowrap;min-height:42px}
+#reports .grid{gap:12px;margin-top:18px}
+#reports label{font-size:12px;color:#43564b;margin-bottom:6px}
+#reports input,#reports select{border-radius:11px;background:#fff;border-color:#d7e1da}
+#reports .actions{display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap;margin-top:15px}
+#reports .actions .btn,#reports .report-export{min-height:43px;border-radius:11px;font-size:13px;padding:11px 14px}
+#reports .btn.secondary{background:#f0f4f1;border:1px solid #e0e7e2;color:#254b38}
+#reports .btn.primary{background:#1b5a3d}
+#reports .report-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 15px}
+#reports .report-stats .stat{position:relative;overflow:hidden;background:#fff;border:1px solid #e0e8e2;border-radius:15px;padding:15px 14px;min-width:0;box-shadow:0 3px 10px rgba(22,55,37,.035)}
+#reports .report-stats .stat:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#438363}
+#reports .report-stats .stat b{font-size:25px;line-height:1.15;letter-spacing:-.5px;color:#174d38;overflow-wrap:anywhere}
+#reports .report-stats .stat span{display:block;margin-top:6px;font-size:11px;line-height:1.35;font-weight:700;color:#69776e}
+#reports .report-section-title{display:flex;align-items:flex-start;gap:11px;margin-bottom:13px;min-width:0}
+#reports .report-section-title h2{font-size:17px;line-height:1.3;margin:1px 0 5px;color:#1b392b}
+#reports .report-section-title .sub{font-size:12px;line-height:1.45;margin:0}
+#reports .report-icon{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;border-radius:11px;background:#eaf3ed;color:#286748;font-size:19px;font-weight:800}
+#reports #marketReport h3{font-size:13px;line-height:1.35;color:#27543c;margin:20px 0 9px;padding-bottom:8px;border-bottom:1px solid #e7ede8}
+#reports #marketReport h3:first-child{margin-top:3px}
+#reports .table-wrap{width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;border:1px solid #e5ebe6;border-radius:12px;margin:0 0 9px;background:#fff;-webkit-overflow-scrolling:touch}
+#reports .table{width:100%;border-collapse:separate;border-spacing:0;font-size:12px;line-height:1.45;margin:0}
+#reports .table th,#reports .table td{padding:11px 12px;border-bottom:1px solid #edf1ee;text-align:left;vertical-align:top;white-space:normal;overflow-wrap:anywhere;max-width:260px}
+#reports .table th{background:#f4f7f5;color:#52645a;font-size:10px;letter-spacing:.45px;font-weight:800;text-transform:uppercase;position:sticky;top:0}
+#reports .table tbody tr:last-child td{border-bottom:0}
+#reports .table tbody tr:nth-child(even){background:#fbfcfb}
+#reports .table td:nth-child(2),#reports .table th:nth-child(2){font-variant-numeric:tabular-nums}
+#reports .demand-panel .table th,#reports .demand-panel .table td{min-width:84px}
+#reports .demand-panel .table th:first-child,#reports .demand-panel .table td:first-child{min-width:125px}
+#reports #recordsReport .table{min-width:720px}
+#reports #recordsReport .table th,#reports #recordsReport .table td{white-space:normal;min-width:80px}
+#reports #recordsReport .table th:nth-child(3),#reports #recordsReport .table td:nth-child(3),#reports #recordsReport .table th:last-child,#reports #recordsReport .table td:last-child{min-width:145px;max-width:230px}
+#reports .report-export{margin-top:9px}
+#reports .sub{color:#718078}
+#reports .report-panel > .sub{line-height:1.5}
+@media(min-width:601px){#reports .report-stats{grid-template-columns:repeat(4,minmax(0,1fr))}#reports .card{padding:20px}#reports .report-header-card{padding:23px}}
+@media(max-width:600px){#reports .card{padding:15px;border-radius:15px}#reports .report-header-card{padding:17px}#reports .report-heading h2{font-size:21px}#reports .report-back{width:100%}#reports .report-stats{grid-template-columns:repeat(2,minmax(0,1fr))}#reports .report-stats .stat{padding:13px 12px}#reports .report-stats .stat b{font-size:23px}#reports .table th,#reports .table td{padding:10px;font-size:11px}#reports .report-actions{justify-content:stretch}#reports .report-actions .btn{flex:1 1 145px}}
+@media print{#reports .report-header-card{background:#fff!important}#reports .card{border:1px solid #ddd!important;border-radius:0!important;padding:12px!important}#reports .report-stats{grid-template-columns:repeat(4,1fr)!important}#reports .table-wrap{overflow:visible!important;border:0}#reports .table{min-width:0!important;font-size:9px!important}#reports .table th,#reports .table td{padding:5px!important;max-width:none!important}#reports .report-export,#reports .report-back,#reports .actions{display:none!important}}
+/* Corrective Reports pass: simple summary tables fit the phone width; only genuinely wide tables scroll. */
+#reports .table{display:table!important;overflow:visible!important;table-layout:fixed}
+#reports .table-wrap{overflow-x:hidden;}
+#reports #marketReport .table-wrap{overflow:visible!important;border-radius:12px}
+#reports #marketReport .table{width:100%;min-width:0!important}
+#reports #marketReport .table th:first-child,#reports #marketReport .table td:first-child{width:78%;}
+#reports #marketReport .table th:last-child,#reports #marketReport .table td:last-child{width:22%;text-align:right;font-weight:700;font-variant-numeric:tabular-nums;}
+#reports #marketReport .table td{padding:12px 13px;line-height:1.4}
+#reports #marketReport .table tbody tr{transition:background-color .15s ease}
+#reports #marketReport .table tbody tr:nth-child(even){background:#f8faf8}
+#reports #marketReport .table tbody tr:hover{background:#eef5f0}
+#reports #marketReport h3{margin-top:22px;font-size:13px;letter-spacing:.1px}
+#reports #marketReport .table th{padding:10px 13px}
+#reports .demand-panel .table-wrap,#reports #recordsReport .table-wrap{overflow-x:auto;}
+#reports .demand-panel .table,#reports #recordsReport .table{table-layout:auto;}
+@media(max-width:600px){
+ #reports .table-wrap{border-radius:12px}
+ #reports #marketReport .table{font-size:12px}
+ #reports #marketReport .table th:first-child,#reports #marketReport .table td:first-child{width:76%}
+ #reports #marketReport .table th:last-child,#reports #marketReport .table td:last-child{width:24%}
+ #reports #marketReport .table td{padding:12px 11px;max-width:none}
+ #reports .demand-panel .table-wrap,#reports #recordsReport .table-wrap{overflow-x:auto;}
+}
+</style>
+
+
+<style id="produce-category-totals-style">
+#produceSummary{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+#produceSummary>span{display:inline-flex;align-items:center;gap:4px;padding:6px 9px;border:1px solid #dfe5e0;border-radius:8px;background:#fff;font-size:12px;line-height:1.3}
+#produceSummary .produce-total-veg{background:#f0f8f1;border-color:#cde5d0}
+#produceSummary .produce-total-fruit{background:#fff6ec;border-color:#f1ddc7}
+#produceSummary .produce-total-all{font-weight:600;background:#f3f5f7}
+</style>
+
+<style id="mf-agent-master-compact-v2">
+/* Compact, tidy Agent Master layout */
+#mfAgentMasterModal{padding:8px!important}
+#mfAgentMasterModal .mf-am-card{padding:12px!important;border-radius:14px!important;max-width:430px!important;max-height:calc(100dvh - 16px)!important;gap:0!important}
+#mfAgentMasterModal #mfAgentMasterTitle{font-size:21px!important;line-height:1.15!important}
+#mfAgentMasterModal .mf-am-card>div:first-child{gap:8px!important;margin-bottom:6px!important}
+#mfAgentMasterModal .mf-am-card>div:first-child button{min-height:36px!important;padding:7px 12px!important;font-size:13px!important}
+#mfAgentMasterModal .mf-am-card>p{font-size:12px!important;line-height:1.35!important;margin:5px 0 10px!important}
+#mfAgentMasterModal #mfAgentForm{margin:0!important}
+#mfAgentMasterModal .mf-am-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px 10px!important}
+#mfAgentMasterModal .mf-am-grid label{display:block!important;min-width:0!important;font-size:12px!important;font-weight:700!important;line-height:1.25!important}
+#mfAgentMasterModal input,#mfAgentMasterModal select{box-sizing:border-box!important;width:100%!important;min-width:0!important;height:38px!important;min-height:38px!important;padding:8px 9px!important;margin:4px 0 0!important;border-radius:8px!important;font-size:14px!important}
+#mfAgentMasterModal #mfAgentPin{margin-bottom:0!important}
+#mfAgentMasterModal #mfAgentForm button{min-height:36px!important;padding:7px 12px!important;margin:8px 5px 0 0!important;font-size:13px!important;border-radius:8px!important}
+#mfAgentMasterModal #mfAgentMessage{font-size:12px!important;margin:4px 0!important}
+#mfAgentMasterModal .mf-am-card>div[style*="display:flex"]{gap:6px!important;margin:8px 0!important}
+#mfAgentMasterModal #mfAgentSearch{flex:1 1 150px!important}
+#mfAgentMasterModal #mfAgentList{font-size:12px!important}
+#mfAgentMasterModal .mf-am-table{font-size:12px!important}
+#mfAgentMasterModal .mf-am-table th,#mfAgentMasterModal .mf-am-table td{padding:6px!important}
+#mfAgentMasterModal .mf-am-table button{min-height:32px!important;padding:5px 8px!important;font-size:12px!important}
+#mfAgentMasterModal #mfAgentList>div{border-radius:9px!important}
+@media(max-width:360px){#mfAgentMasterModal .mf-am-grid{grid-template-columns:minmax(0,1fr)!important}#mfAgentMasterModal .mf-am-card{padding:10px!important}}
+</style>
+
+<style id="report-pie-stack-fix">
+/* Keep report pie charts full-width and vertically stacked on every screen. */
+#reports .report-chart-grid { display:grid !important; grid-template-columns:minmax(0,1fr) !important; gap:12px !important; width:100%; }
+#reports .report-pie-card { width:100%; min-width:0; }
+#reports .pie-layout { display:flex; flex-direction:row; align-items:center; gap:16px; width:100%; }
+#reports .pie-chart { flex:0 0 112px; width:112px; height:112px; }
+#reports .pie-legend { flex:1 1 auto; width:auto; min-width:0; }
+#reports .pie-label { overflow-wrap:anywhere; word-break:normal; }
+@media(max-width:520px) {
+  #reports .report-chart-grid { grid-template-columns:minmax(0,1fr) !important; gap:10px !important; }
+  #reports .report-pie-card { padding:12px !important; }
+  #reports .pie-layout { gap:12px; }
+  #reports .pie-chart { flex-basis:100px; width:100px; height:100px; }
+}
+@media print { #reports .report-chart-grid { grid-template-columns:minmax(0,1fr) !important; } }
+</style>
+
+<style id="mf-dashboard-redesign">
+/* Compact, clean, mobile-first dashboard refresh */
+:root{--mf-green:#14543d;--mf-green2:#1d7552;--mf-border:#dce9e1;--mf-muted:#65786e;--mf-bg:#f5f8f6}
+body{background:var(--mf-bg)}
+.app{width:100%;max-width:100%;min-width:0}
+.topbar{width:100%;padding:10px clamp(12px,3vw,24px);min-height:62px;height:auto;gap:12px;box-shadow:0 2px 12px rgba(15,55,36,.08)}
+.brand{font-size:clamp(14px,2.4vw,19px);line-height:1.15;letter-spacing:.2px}.brand small{font-size:9px;letter-spacing:1.25px;margin-top:3px}
+.topbar>div:last-child{min-width:0}.user-chip{max-width:180px;overflow-wrap:anywhere;font-size:11px;padding:7px 10px;line-height:1.35}.topbar .btn{min-height:38px;padding:7px 10px!important;font-size:12px}
+.container{width:100%;max-width:1120px;padding:18px clamp(12px,2.5vw,24px) 34px}
+#dashboard .hero{position:relative;padding:20px 20px 18px;margin-bottom:14px;border-radius:17px;background:linear-gradient(125deg,#104b36 0%,#1f6b4b 100%);box-shadow:0 5px 16px rgba(19,77,53,.1)}
+#dashboard .hero h1{font-size:clamp(20px,3vw,27px);line-height:1.2;margin:0 0 5px;letter-spacing:-.35px}
+#dashboard .hero>p{font-size:12px;line-height:1.5;margin:10px 0 0;max-width:58ch}
+#dashboard #firebaseStatus{font-size:11px;margin:7px 0!important;line-height:1.4}
+#dashboard .toolbar{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px!important;margin:12px 0 0!important}
+#dashboard .toolbar button{min-width:0;min-height:42px;padding:9px 10px!important;border:1px solid rgba(255,255,255,.22);border-radius:10px;background:#fff;color:#164b37;font-size:12px;font-weight:750;line-height:1.25;white-space:normal;overflow-wrap:anywhere;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+#dashboard .toolbar button:active{transform:translateY(1px)}
+#dashboard .stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 14px}
+#dashboard .stat{min-width:0;padding:13px 14px;border-radius:13px;box-shadow:0 2px 8px rgba(20,55,38,.035)}
+#dashboard .stat b{font-size:clamp(20px,3vw,26px);line-height:1.15;color:#123e2d;margin-bottom:5px}
+#dashboard .stat span{font-size:11px;line-height:1.35;display:block}
+#dashboard>.card{padding:16px;margin-bottom:13px;border-radius:15px;box-shadow:0 2px 10px rgba(20,55,38,.035)}
+#dashboard .card h2{font-size:16px;line-height:1.3;margin-bottom:5px;letter-spacing:-.15px}
+#dashboard .card .sub{font-size:12px;line-height:1.45;margin-bottom:12px}
+#dashboard .card .btn{min-height:42px;padding:10px 14px;font-size:13px}
+#dashboard #recent .table-wrap{width:100%;overflow-x:auto;border-radius:10px;border:1px solid #e8eee9}
+#dashboard #recent .table{min-width:560px;font-size:12px}
+#dashboard #recent .table th,#dashboard #recent .table td{padding:10px 11px}
+#dashboard #recent .table th{background:#f4f8f5;font-size:10px;letter-spacing:.25px}
+#dashboard #recent .table tbody tr:last-child td{border-bottom:0}
+#dashboard .toolbar button:focus-visible,#dashboard .btn:focus-visible{outline:2px solid #f3bd68;outline-offset:2px}
+@media(max-width:600px){
+ .topbar{min-height:58px;padding:8px 10px;gap:8px}
+ .brand{font-size:14px;max-width:48%;}.brand small{font-size:8px;letter-spacing:1px}
+ .user-chip{font-size:10px;padding:6px 8px;max-width:145px}
+ .container{padding:12px 10px calc(24px + env(safe-area-inset-bottom))}
+ #dashboard .hero{padding:15px 13px 14px;border-radius:14px;margin-bottom:11px}
+ #dashboard .hero h1{font-size:20px}
+ #dashboard .hero>p{font-size:11px;margin-top:8px}
+ #dashboard .toolbar{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px!important;margin-top:10px!important}
+ #dashboard .toolbar button{min-height:40px;padding:8px!important;font-size:11px;border-radius:9px}
+ #dashboard .stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:11px}
+ #dashboard .stat{padding:10px 8px;border-radius:11px;text-align:left}
+ #dashboard .stat b{font-size:20px;margin-bottom:4px}
+ #dashboard .stat span{font-size:10px;overflow-wrap:anywhere}
+ #dashboard>.card{padding:13px;margin-bottom:10px;border-radius:13px}
+ #dashboard .card h2{font-size:15px}
+ #dashboard .card .sub{font-size:11px;margin-bottom:10px}
+ #dashboard .card .btn{width:100%;min-height:40px;font-size:12px}
+ #dashboard #recent .table-wrap{overflow:visible;border:0}
+ #dashboard #recent .table,#dashboard #recent .table tbody{display:block;width:100%;min-width:0}
+ #dashboard #recent .table thead{display:none}
+ #dashboard #recent .table tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border:1px solid #e4ece6;border-radius:11px;background:#fff;margin:0 0 9px;overflow:hidden}
+ #dashboard #recent .table td{display:block;min-width:0;white-space:normal;overflow-wrap:anywhere;padding:9px 10px;border-bottom:1px solid #edf2ee;font-size:11px;line-height:1.35}
+ #dashboard #recent .table td:before{display:block;margin-bottom:3px;color:#718178;font-size:9px;font-weight:800;letter-spacing:.35px;text-transform:uppercase}
+ #dashboard #recent .table td:nth-child(1):before{content:'Business'}
+ #dashboard #recent .table td:nth-child(2):before{content:'Category'}
+ #dashboard #recent .table td:nth-child(3):before{content:'Area'}
+ #dashboard #recent .table td:nth-child(4):before{content:'Agent'}
+ #dashboard #recent .table td:nth-child(5):before{content:'Created'}
+ #dashboard #recent .table td:last-child{border-bottom:1px solid #edf2ee}
+}
+@media(max-width:350px){
+ .user-chip{max-width:112px;font-size:9px}
+ #dashboard .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #dashboard .toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #dashboard #recent .table tr{grid-template-columns:minmax(0,1fr)}
+ #dashboard #recent .table td{border-bottom:1px solid #edf2ee}
+}
+@media(min-width:900px){#dashboard .toolbar{grid-template-columns:repeat(4,minmax(0,1fr))}#dashboard .hero{padding:23px 24px}}
+</style>
+
+</head>
+<body>
+
+<div id="loginView" class="login">
+  <div class="login-card">
+    <div class="logo-box">MF</div>
+    <h1 style="margin:0 0 5px">Mangaluru Fresh</h1>
+    <p class="sub">B2B Fresh Produce Market Survey</p>
+    <label style="margin-top:14px">Mobile number</label>
+    <input id="loginMobile" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" autocomplete="tel">
+    <label style="margin-top:14px">Agent PIN</label>
+    <input id="loginPin" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="Enter your PIN" autocomplete="current-password"><button class="btn primary" style="width:100%;margin-top:18px" onclick="login()">Enter Survey App</button>
+    <p class="sub" style="margin-top:10px;margin-bottom:0">Sign in with your registered mobile number and PIN.</p>
+    <div id="loginError" class="error"></div>
+  </div>
+</div>
+
+<div id="appView" class="app hidden">
+  <header class="topbar">
+    <div class="brand">MANGALURU FRESH<small>B2B MARKET SURVEY</small></div>
+    <div style="display:flex;align-items:center;gap:9px"><div id="userChip" class="user-chip"></div><button class="btn secondary" style="padding:7px 10px" onclick="logout()">Exit</button></div>
+  </header>
+
+  <main class="container">
+    <section id="dashboard">
+      <div class="hero">
+        <h1>Market Mapping Dashboard</h1>
+<div id="firebaseStatus" class="sub" role="status">Connecting to Firebase…</div><div class="toolbar" style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0"><button type="button" class="pm-secondary" onclick="openProductMaster()">📦 Product Master</button><button type="button" class="pm-secondary" onclick="openReports()">📊 Reports & Export</button><button type="button" class="pm-secondary" onclick="exportSurveysCSV()">⬇ Business Summary CSV</button><button type="button" class="pm-secondary" onclick="exportDemandCSV()">🥬 Product Demand CSV</button><button type="button" class="pm-secondary" onclick="exportFullSurveysCSV()">🗄 Full Survey Backup</button><button id="adminPanelEntry" type="button" class="pm-secondary mf-admin-entry" onclick="openAdminPanel()">🛡 Admin Panel</button><button id="agentMasterEntry" type="button" class="pm-secondary mf-admin-entry" onclick="openAgentMaster()">👥 Agent Master</button></div>
+        <p>Collect structured procurement intelligence from Mangaluru B2B buyers.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="todayCount">0</b><span>Today's surveys</span></div>
+        <div class="stat"><b id="totalCount">0</b><span>Total surveys</span></div>
+        <div class="stat"><b id="followCount">0</b><span>Follow-ups</span></div>
+      </div>
+      <div class="card" style="margin-top:16px">
+        <h2>Start field collection</h2>
+        <p class="sub">One business per survey. Capture demand, sourcing, supplier issues and switching potential.</p>
+        <button class="btn primary" onclick="startSurvey()">+ New Business Survey</button>
+      </div>
+      <div class="card">
+        <h2>Recent surveys from all agents</h2><p class="sub">All agents can view surveys submitted by every team member. Data syncs through Firebase.</p>
+        <div id="recent"></div>
+      </div>
+    </section>
+
+    <section id="reports" class="hidden reports-page">
+      <div class="card report-header-card">
+        <div class="report-heading"><div><p class="report-eyebrow">MANGALURU FRESH · INSIGHTS</p><h2>Market intelligence reports</h2><p class="sub">Filter saved surveys and export structured data.</p></div><button class="btn secondary report-back" onclick="closeReports()">← Dashboard</button></div>
+        <div class="grid">
+          <div><label>From date</label><input id="rfFrom" type="date"></div><div><label>To date</label><input id="rfTo" type="date"></div>
+          <div><label>Agent</label><select id="rfAgent"><option value="">All agents</option></select></div>
+          <div><label>Area / locality</label><input id="rfArea" placeholder="Filter area"></div>
+          <div><label>Business category</label><select id="rfCategory"><option value="">All categories</option></select></div>
+          <div><label>Product</label><select id="rfProduct"><option value="">All products</option></select></div>
+        </div>
+        <div class="actions"><button class="btn secondary" onclick="clearReportFilters()">Clear filters</button><button class="btn primary" onclick="renderReports()">Apply filters</button></div>
+      </div>
+      <section class="report-block report-overview-block" aria-labelledby="reportOverviewTitle">
+        <div class="report-block-heading"><div><p class="report-eyebrow">01 · OVERVIEW</p><h2 id="reportOverviewTitle">Survey snapshot</h2><p class="sub">Key totals based on the filters above.</p></div></div>
+        <div class="stats report-stats" id="reportStats"></div>
+      </section>
+      <section class="report-block report-visual-block" aria-labelledby="reportVisualTitle">
+        <div class="report-block-heading"><div><p class="report-eyebrow">02 · VISUAL ANALYSIS</p><h2 id="reportVisualTitle">Market breakdown</h2><p class="sub">Each chart shows the leading categories; smaller groups are combined as “Other”.</p></div></div>
+        <div class="report-chart-grid" id="reportCharts" aria-live="polite"></div>
+      </section>
+      <section class="report-block report-demand-block" aria-labelledby="reportDemandTitle">
+      <div class="card report-panel demand-panel"><div class="report-section-title"><span class="report-icon">↗</span><div><p class="report-eyebrow">03 · DEMAND</p><h2 id="reportDemandTitle">Product demand summary</h2><p class="sub">Totals are grouped only when product and unit match. Weekly estimate excludes “As required”.</p></div></div><div id="demandReport"></div><button class="btn secondary report-export" onclick="exportDemandCSV()">⬇ Export demand CSV</button></div>
+      </section>
+      <section class="report-block report-market-block" aria-labelledby="reportMarketTitle">
+      <div class="card report-panel"><div class="report-section-title"><span class="report-icon">⌁</span><div><p class="report-eyebrow">04 · MARKET DETAILS</p><h2 id="reportMarketTitle">Market and follow-up summary</h2><p class="sub">Area, category, sourcing channels, supplier problems and opportunity signals.</p></div></div><div id="marketReport"></div></div>
+      </section>
+      <section class="report-block report-records-block" aria-labelledby="reportRecordsTitle">
+      <div class="card report-panel"><div class="report-section-title"><span class="report-icon">▤</span><div><p class="report-eyebrow">05 · RECORDS</p><h2 id="reportRecordsTitle">Survey records</h2><p class="sub">Detailed records matching the selected filters.</p></div></div><div id="recordsReport"></div><div class="actions report-actions"><button class="btn secondary" onclick="exportSurveysCSV()">⬇ Business Summary CSV</button><button class="btn secondary" onclick="exportDemandCSV()">🥬 Product Demand CSV</button><button class="btn secondary" onclick="exportFullSurveysCSV()">🗄 Full Survey Backup</button><button class="btn secondary" onclick="window.print()">Print report</button></div></div>
+      </section>
+    </section>
+
+    <section id="survey" class="hidden">
+      <div class="stepper">
+        <button type="button" class="step" data-step="1" onclick="next(1)" aria-label="Go to Business details">1 Business</button><button type="button" class="step" data-step="2" onclick="next(2)" aria-label="Go to Procurement details">2 Procurement</button><button type="button" class="step" data-step="3" onclick="next(3)" aria-label="Go to Product demand">3 Products</button><button type="button" class="step" data-step="4" onclick="next(4)" aria-label="Go to Supplier problems">4 Problems</button><button type="button" class="step" data-step="5" onclick="next(5)" aria-label="Go to Opportunity and follow-up">5 Opportunity</button>
+      </div>
+
+      <p class="sub" style="margin:0 0 12px">Required to submit: business name, phone, category, area, at least one procurement source, and one complete product-demand row. All other fields are optional.</p>
+      <form id="surveyForm" onsubmit="return false">
+      <div class="card survey-step" data-page="1">
+        <h2>Business details</h2><p class="sub">Identify the B2B buyer accurately.</p>
+        <div class="grid">
+          <div><label>Business name *</label><input id="businessName" required></div>
+          <div><label>Contact person (optional)</label><input id="contactPerson"></div>
+          <div><label>Phone number *</label><input id="phone" inputmode="tel" required></div>
+          <div><label>Business category *</label><select id="category" required><option value="">Select</option><option>Fruit shop</option><option>Vegetable shop</option><option>Supermarket</option><option>Kirana / General store</option><option>Hotel</option><option>Restaurant</option><option>PG / Hostel</option><option>Mess / Canteen</option><option>Caterer</option><option>Juice shop</option><option>Bakery</option><option>Hospital / Institution</option><option>Temple / Religious Institution</option><option>Other</option></select></div>
+          <div><label>Area / locality *</label><input id="area" placeholder="e.g. Kadri" required></div>
+          <div><label>Full address (optional)</label><input id="address"></div>
+          <div><label>Years in business (optional)</label><input id="years" type="number" min="0"></div>
+          <div><label>Approx monthly produce purchase (optional)</label><select id="monthly"><option value="">Select</option><option>Below ₹25,000</option><option>₹25,000–₹50,000</option><option>₹50,000–₹1 lakh</option><option>₹1–3 lakh</option><option>₹3–5 lakh</option><option>₹5–10 lakh</option><option>₹10 lakh+</option></select></div>
+        </div>
+        <div class="actions"><span></span><button class="btn primary" onclick="next(2)">Next →</button></div>
+      </div>
+
+      <div class="card survey-step hidden" data-page="2">
+        <h2>Procurement & current sourcing</h2><p class="sub">Select at least one source. All supplier and delivery details below are optional.</p>
+        <div class="grid">
+          <div class="full"><label>Current procurement sources *</label><div class="choices" data-group="sources">
+            <button type="button" class="choice" onclick="toggleChoice(this)">Kallapu</button><button type="button" class="choice" onclick="toggleChoice(this)">Central Market / Bunder</button><button type="button" class="choice" onclick="toggleChoice(this)">APMC / Baikampady</button><button type="button" class="choice" onclick="toggleChoice(this)">Direct farmer</button><button type="button" class="choice" onclick="toggleChoice(this)">Local wholesaler</button><button type="button" class="choice" onclick="toggleChoice(this)">Distributor delivery</button><button type="button" class="choice" onclick="toggleChoice(this)">Bengaluru supplier</button><button type="button" class="choice" onclick="toggleChoice(this)">Kerala supplier</button><button type="button" class="choice" onclick="toggleChoice(this)">Other</button>
+          </div></div>
+          <div><label>Main supplier / wholesaler name (optional)</label><input id="supplier"></div>
+          <div><label>Supplier phone (optional)</label><input id="supplierPhone"></div>
+          <div><label>Supplier delivers to business? (optional)</label><select id="delivery"><option value="">Select</option><option>Yes</option><option>No</option><option>Sometimes</option></select></div>
+          <div><label>Delivery frequency (optional)</label><select id="frequency"><option value="">Select</option><option>Daily</option><option>Alternate days</option><option>2–3 times/week</option><option>Weekly</option><option>As required</option></select></div>
+          <div><label>Preferred delivery time (optional)</label><select id="deliveryTime"><option value="">Select</option><option>4–6 AM</option><option>6–8 AM</option><option>8–10 AM</option><option>10 AM–12 PM</option><option>Afternoon</option><option>Evening</option></select></div>
+          <div>
+  <label>Usual payment method *</label>
+  <select id="payment" required onchange="toggleCreditPeriod()">
+    <option value="">Select payment method</option>
+    <option value="Cash / Immediate">Cash / Immediate</option>
+    <option value="Credit">Credit</option>
+    <option value="UPI / Bank transfer">UPI / Bank transfer</option>
+    <option value="Mixed">Mixed (cash and credit)</option>
+  </select>
+</div>
+<div id="creditPeriodWrap" class="hidden">
+  <label>Usual credit period</label>
+  <select id="creditPeriod">
+    <option value="">Select credit period</option>
+    <option value="7 days">7 days</option>
+    <option value="15 days">15 days</option>
+    <option value="21 days">21 days</option>
+    <option value="30 days">30 days</option>
+    <option value="45 days">45 days</option>
+    <option value="60 days">60 days</option>
+    <option value="More than 60 days">More than 60 days</option>
+    <option value="Negotiable / varies">Negotiable / varies</option>
+  </select>
+</div>
+<div>
+  <label>Other payment details (optional)</label>
+  <input id="paymentOther" placeholder="e.g. payment every Monday">
+</div>
+        </div>
+        <div class="actions"><button class="btn secondary" onclick="next(1)">← Back</button><button class="btn primary" onclick="next(3)">Next →</button></div>
+      </div>
+
+      <div class="card survey-step hidden" data-page="3">
+        <h2>Product demand</h2><p class="sub">Enter the required quantity in kg beside each item. Leave items they do not buy blank. Fruits and vegetables are listed separately.</p>
+        <div id="products"></div>
+        <div id="produceSummary" class="produce-summary" aria-live="polite">0 products selected · 0 kg entered</div>
+        <div class="actions"><button class="btn secondary" onclick="next(2)">← Back</button><button type="button" class="btn primary" onclick="finishProductDemand()">Done ✓</button></div>
+      </div>
+
+      <div class="card survey-step hidden" data-page="4">
+        <h2>Current supplier problems</h2><p class="sub">Select any issues the buyer mentions. All problem details are optional.</p>
+        <div class="choices" data-group="problems">
+          <button type="button" class="choice" onclick="toggleChoice(this)">Price changes frequently</button><button type="button" class="choice" onclick="toggleChoice(this)">Poor quality</button><button type="button" class="choice" onclick="toggleChoice(this)">Mixed quality</button><button type="button" class="choice" onclick="toggleChoice(this)">Short weight</button><button type="button" class="choice" onclick="toggleChoice(this)">Late delivery</button><button type="button" class="choice" onclick="toggleChoice(this)">No delivery</button><button type="button" class="choice" onclick="toggleChoice(this)">Product unavailable</button><button type="button" class="choice" onclick="toggleChoice(this)">Forced to buy unwanted items</button><button type="button" class="choice" onclick="toggleChoice(this)">Credit/payment issue</button><button type="button" class="choice" onclick="toggleChoice(this)">No proper bill</button><button type="button" class="choice" onclick="toggleChoice(this)">Damaged produce</button><button type="button" class="choice" onclick="toggleChoice(this)">No replacement</button><button type="button" class="choice" onclick="toggleChoice(this)">Minimum quantity too high</button><button type="button" class="choice" onclick="toggleChoice(this)">Other</button>
+        </div>
+        <div style="margin-top:18px"><label>Biggest procurement problem (optional)</label><textarea id="biggestProblem" placeholder="Write what the buyer actually says..."></textarea></div>
+        <div class="actions"><button class="btn secondary" onclick="next(3)">← Back</button><button class="btn primary" onclick="next(5)">Next →</button></div>
+      </div>
+
+      <div class="card survey-step hidden" data-page="5">
+        <h2>Opportunity & follow-up</h2><p class="sub">Record opportunity signals when available. These questions are optional.</p>
+        <div class="grid">
+          <div><label>Would they consider a new supplier? (optional)</label><select id="switching"><option value="">Select</option><option>Definitely</option><option>Maybe</option><option>Only for some products</option><option>No</option></select></div>
+          <div><label>What would make them switch? (optional)</label><input id="switchReason" placeholder="Price / quality / delivery / credit..."></div>
+          <div><label>Interested in pilot supply? (optional)</label><select id="pilot"><option value="">Select</option><option>Yes</option><option>Maybe</option><option>No</option></select></div>
+          <div><label>Preferred follow-up date (optional)</label><input id="followup" type="date"></div>
+          <div class="full"><label>Agent notes (optional)</label><textarea id="notes" placeholder="Anything useful for the sales/procurement team"></textarea></div>
+        </div>
+        <div class="actions"><button class="btn secondary" onclick="next(4)">← Back</button><button class="btn primary" onclick="saveSurvey()">✓ Submit Survey</button></div>
+      </div>
+      </form>
+    </section>
+  </main>
+</div>
+
+<script>
+const KEY='mf_v1_surveys', USER='mf_v1_user';
+let currentPage=1, productRows=0;
+let mfLoginBusy=false;
+async function mfFindAgentByMobile(mobile){
+  const base=mfDb.ref('mangaluruFresh/agents');
+  // New agents use their mobile number as the database key, so this is the fastest path.
+  const direct=await base.child(mobile).once('value');
+  if(direct.exists()) return [mobile,direct.val()];
+  // Legacy records (for example Agent ID 1614) are located by their saved phone field.
+  try{
+    const q=await base.orderByChild('phone').equalTo(mobile).limitToFirst(1).once('value');
+    const rows=q.val()||{};const found=Object.entries(rows).find(([id,a])=>String(a.phone||a.mobile||'').replace(/\D/g,'')===mobile);
+    if(found)return found;
+  }catch(queryError){console.warn('Targeted agent lookup failed; using compatibility lookup.',queryError)}
+  // Compatibility fallback for older records with only a mobile field or inconsistent formatting.
+  const snap=await base.once('value');
+  const agents=snap.val()||{};
+  return Object.entries(agents).find(([id,a])=>String(a.phone||a.mobile||'').replace(/\D/g,'')===mobile)||null;
+}
+function login(){
+  if(mfLoginBusy)return;
+  const mobile=(document.getElementById('loginMobile')?.value||'').replace(/\D/g,'').trim();
+  const pin=(document.getElementById('loginPin')?.value||'').trim();
+  if(!mobile||!pin){mfShowLoginError('Enter your mobile number and PIN.');return}
+  if(!/^\d{10}$/.test(mobile)){mfShowLoginError('Enter a valid 10-digit mobile number.');return}
+  if(!/^\d{4,8}$/.test(pin)){mfShowLoginError('PIN must be 4–8 digits.');return}
+  try{mfInitFirebase()}catch(e){mfShowLoginError(e.message);return}
+  mfLoginBusy=true;const btn=document.querySelector('#loginView button[onclick="login()"]');if(btn){btn.disabled=true;btn.dataset.originalText=btn.textContent;btn.textContent='Signing in…'}
+  mfShowLoginError('Checking account…');
+  // Reuse an existing Firebase session instead of creating a new anonymous session on every login.
+  const authReady=mfAuth.currentUser?Promise.resolve({user:mfAuth.currentUser}):mfAuth.signInAnonymously();
+  authReady.then(async cred=>{
+    mfShowLoginError('Verifying PIN…');
+    const match=await mfFindAgentByMobile(mobile);
+    if(!match)throw Object.assign(new Error('Mobile number not registered. Ask the administrator to add it.'),{code:'mf/mobile-not-registered'});
+    const [id,agent]=match;
+    if(agent.active===false)throw Object.assign(new Error('This agent is inactive. Contact the administrator.'),{code:'mf/agent-inactive'});
+    if(!agent.pinHash)throw Object.assign(new Error('No PIN is set for this mobile number. Ask the administrator to set one in Agent Master.'),{code:'mf/pin-not-set'});
+    const candidate=await mfHashPin(pin);
+    if(candidate!==agent.pinHash)throw Object.assign(new Error('Incorrect PIN. Check it and try again.'),{code:'mf/pin-invalid'});
+    const profile={name:agent.name||'Agent',id:String(id),uid:cred.user.uid,phone:mobile,authMode:'anonymous',role:agent.role||'agent'};
+    localStorage.setItem(USER,JSON.stringify(profile));mfStartSharedListeners();showApp();
+  }).catch(e=>{
+    const messages={
+      'auth/operation-not-allowed':'Enable Authentication → Sign-in method → Anonymous in Firebase Console.',
+      'auth/network-request-failed':'Network error. Check your internet connection and reload.',
+      'auth/too-many-requests':'Too many attempts. Wait a while and try again.',
+      'mf/mobile-not-registered':'Mobile number not registered. Ask the administrator to add it.',
+      'mf/agent-inactive':'This agent is inactive. Contact the administrator.',
+      'mf/pin-not-set':'No PIN is set for this mobile number. Ask the administrator to set one in Agent Master.',
+      'mf/pin-invalid':'Incorrect PIN. Check it and try again.'
+    };
+    mfShowLoginError(messages[e.code]||('Login failed: '+e.message));
+  }).finally(()=>{mfLoginBusy=false;if(btn){btn.disabled=false;btn.textContent=btn.dataset.originalText||'Enter Survey App'}});
+}
+function logout(){
+  mfStopSharedListeners();
+  if(mfAuth) mfAuth.signOut().catch(console.error);
+  localStorage.removeItem(USER);
+  location.reload();
+}
+function showApp(){
+  const u=JSON.parse(localStorage.getItem(USER)||'null'); if(!u)return;
+  document.getElementById('loginView').classList.add('hidden');document.getElementById('appView').classList.remove('hidden');
+  document.getElementById('userChip').textContent=u.name+' · '+u.id;
+  const agentMasterEntry=document.getElementById('agentMasterEntry');
+  const adminPanelEntry=document.getElementById('adminPanelEntry');
+  const isAdmin=!!u&&(u.role==='admin'||String(u.id)==='1614');
+  if(agentMasterEntry)agentMasterEntry.style.setProperty('display',isAdmin?'inline-flex':'none','important');
+  if(adminPanelEntry)adminPanelEntry.style.setProperty('display',isAdmin?'inline-flex':'none','important');
+  renderDashboard();
+  try{if(mfAuth&&mfAuth.currentUser)mfStartSharedListeners()}catch(e){console.error(e)}
+}
+function surveys(){return JSON.parse(localStorage.getItem(KEY)||'[]')}
+function renderDashboard(){
+  const data=surveys().filter(x=>x.recordStatus!=='deleted'), now=new Date(), today=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');
+  // Dashboard counts and recent list are team-wide, not limited to the signed-in agent.
+  document.getElementById('todayCount').textContent=data.filter(x=>x.date===today).length;
+  document.getElementById('totalCount').textContent=data.length;
+  document.getElementById('followCount').textContent=data.filter(x=>x.followup).length;
+  const recent=data.slice().sort((a,b)=>String(b.updatedAt||b.date||'').localeCompare(String(a.updatedAt||a.date||''))).slice(0,8);
+  document.getElementById('recent').innerHTML=recent.length?'<div class="table-wrap"><table class="table"><thead><tr><th>Business</th><th>Category</th><th>Area</th><th>Agent</th><th>Created</th></tr></thead><tbody>'+recent.map(x=>`<tr><td>${esc(x.businessName)}</td><td>${esc(x.category)}</td><td>${esc(x.area)}</td><td>${esc(x.agentName||x.agentId||'Unknown')}</td><td>${esc(x.createdAt)}</td></tr>`).join('')+'</tbody></table></div>':'<p class="sub">No surveys yet. Start the first field survey.</p>';
+}
+function startSurvey(){document.getElementById('dashboard').classList.add('hidden');document.getElementById('reports').classList.add('hidden');document.getElementById('survey').classList.remove('hidden');resetSurvey();showPage(1)}
+function resetSurvey(){
+  document.getElementById('surveyForm').reset();
+  document.querySelectorAll('.choice.active').forEach(x=>x.classList.remove('active'));
+  document.getElementById('products').innerHTML='';productRows=0;renderProduceChecklist();
+}
+function next(n){showPage(n);window.scrollTo({top:0,behavior:'smooth'})}
+function showPage(n){
+  currentPage=n;
+  document.querySelectorAll('.survey-step').forEach(x=>x.classList.toggle('hidden',+x.dataset.page!==n));
+  document.querySelectorAll('.step').forEach(x=>x.classList.toggle('active',+x.dataset.step===n));
+}
+function toggleChoice(el){el.classList.toggle('active')}
+function selected(group){return [...document.querySelectorAll(`[data-group="${group}"] .choice.active`)].map(x=>x.textContent)}
+const MF_KANNADA_PRODUCE_NAMES={
+  'tomato':'ಟೊಮೇಟೊ','potato':'ಆಲೂಗಡ್ಡೆ','onion':'ಈರುಳ್ಳಿ','red onion':'ಕೆಂಪು ಈರುಳ್ಳಿ','shallots':'ಸಣ್ಣ ಈರುಳ್ಳಿ','garlic':'ಬೆಳ್ಳುಳ್ಳಿ','ginger':'ಶುಂಠಿ',
+  'carrot':'ಕ್ಯಾರೆಟ್','beetroot':'ಬೀಟ್‌ರೂಟ್','radish':'ಮೂಲಂಗಿ','cucumber':'ಸೌತೆಕಾಯಿ','ash gourd':'ಬೂದು ಕುಂಬಳಕಾಯಿ','bottle gourd':'ಸೋರೆಕಾಯಿ','bitter gourd':'ಹಾಗಲಕಾಯಿ','ridge gourd':'ಹೀರೆಕಾಯಿ','snake gourd':'ಪಡುವಲಕಾಯಿ','pumpkin':'ಕುಂಬಳಕಾಯಿ','chow chow':'ಸೀಮೆ ಬದನೆಕಾಯಿ','chayote':'ಸೀಮೆ ಬದನೆಕಾಯಿ','drumstick':'ನುಗ್ಗೆಕಾಯಿ','raw banana':'ಬಾಳೆಕಾಯಿ','plantain':'ಬಾಳೆಕಾಯಿ','banana flower':'ಬಾಳೆಹೂವು',
+  'green chilli':'ಹಸಿಮೆಣಸಿನಕಾಯಿ','chilli':'ಮೆಣಸಿನಕಾಯಿ','capsicum':'ದೊಣ್ಣೆ ಮೆಣಸಿನಕಾಯಿ','bell pepper':'ದೊಣ್ಣೆ ಮೆಣಸಿನಕಾಯಿ','cabbage':'ಎಲೆಕೋಸು','cauliflower':'ಹೂಕೋಸು','broccoli':'ಬ್ರೊಕೋಲಿ','okra':'ಬೆಂಡೆಕಾಯಿ','ladies finger':'ಬೆಂಡೆಕಾಯಿ','brinjal':'ಬದನೆಕಾಯಿ','eggplant':'ಬದನೆಕಾಯಿ','beans':'ಬೀನ್ಸ್','french beans':'ಫ್ರೆಂಚ್ ಬೀನ್ಸ್','cluster beans':'ಗೋರಿಕಾಯಿ','peas':'ಬಟಾಣಿ','green peas':'ಹಸಿಬಟಾಣಿ','sweet corn':'ಸಿಹಿ ಜೋಳ','corn':'ಜೋಳ','spinach':'ಪಾಲಕ್ ಸೊಪ್ಪು','amaranth leaves':'ದಂಟಿನ ಸೊಪ್ಪು','coriander leaves':'ಕೊತ್ತಂಬರಿ ಸೊಪ್ಪು','coriander':'ಕೊತ್ತಂಬರಿ ಸೊಪ್ಪು','mint':'ಪುದೀನಾ ಸೊಪ್ಪು','curry leaves':'ಕರಿಬೇವು','methi leaves':'ಮೆಂತ್ಯ ಸೊಪ್ಪು','fenugreek leaves':'ಮೆಂತ್ಯ ಸೊಪ್ಪು','spring onion':'ಸ್ಪ್ರಿಂಗ್ ಆನಿಯನ್','lettuce':'ಲೆಟ್ಯೂಸ್','lemon':'ನಿಂಬೆಹಣ್ಣು','lime':'ನಿಂಬೆಹಣ್ಣು','mushroom':'ಅಣಬೆ','sweet potato':'ಸಿಹಿ ಗೆಣಸು','yam':'ಸುವರ್ಣ ಗೆಡ್ಡೆ','taro':'ಕೆಸುವಿನ ಗೆಡ್ಡೆ','raw mango':'ಮಾವಿನಕಾಯಿ','mango':'ಮಾವಿನಹಣ್ಣು','banana':'ಬಾಳೆಹಣ್ಣು','apple':'ಸೇಬು','orange':'ಕಿತ್ತಳೆ','mosambi':'ಮೂಸಂಬಿ','sweet lime':'ಮೂಸಂಬಿ','grapes':'ದ್ರಾಕ್ಷಿ','watermelon':'ಕಲ್ಲಂಗಡಿ','muskmelon':'ಕರಬೂಜ','papaya':'ಪಪ್ಪಾಯಿ','pineapple':'ಅನಾನಸ್','pomegranate':'ದಾಳಿಂಬೆ','guava':'ಸೀಬೆಹಣ್ಣು','sapota':'ಸಪೋಟ','chikoo':'ಸಪೋಟ','jackfruit':'ಹಲಸಿನಹಣ್ಣು','coconut':'ತೆಂಗಿನಕಾಯಿ','tender coconut':'ಎಳನೀರು','pear':'ಪೇರಲೆ ಹಣ್ಣು','pears':'ಪೇರಲೆ ಹಣ್ಣು','peach':'ಪೀಚ್ ಹಣ್ಣು','plum':'ಪ್ಲಮ್ ಹಣ್ಣು','kiwi':'ಕಿವಿ ಹಣ್ಣು','strawberry':'ಸ್ಟ್ರಾಬೆರಿ','dragon fruit':'ಡ್ರ್ಯಾಗನ್ ಹಣ್ಣು','custard apple':'ಸೀತಾಫಲ','fig':'ಅಂಜೂರ','dates':'ಖರ್ಜೂರ','avocado':'ಅವಕಾಡೊ','litchi':'ಲಿಚಿ','lichi':'ಲಿಚಿ','berries':'ಬೆರ್ರಿ ಹಣ್ಣುಗಳು'
+};
+function mfKannadaProduceName(name){
+  const clean=String(name||'').trim();
+  const key=clean.toLowerCase().replace(/[’']/g,'').replace(/\s+/g,' ');
+  if(MF_KANNADA_PRODUCE_NAMES[key])return MF_KANNADA_PRODUCE_NAMES[key];
+  const singular=key.endsWith('s')?key.slice(0,-1):key;
+  return MF_KANNADA_PRODUCE_NAMES[singular]||'';
+}
+function renderProduceChecklist(){
+  const host=document.getElementById('products');if(!host)return;
+  host.innerHTML='';productRows=0;
+  const all=(window.MangaluruFreshProducts&&window.MangaluruFreshProducts.getAll)?window.MangaluruFreshProducts.getAll():[];
+  const products=all.filter(p=>p&&p.name&&p.active!==false).slice().sort((a,b)=>a.name.localeCompare(b.name));
+  const fruits=products.filter(p=>String(p.category||'').toLowerCase()==='fruit');
+  const vegetables=products.filter(p=>!fruits.includes(p));
+  const makeGroup=(title,items,groupKey)=>{
+    const section=document.createElement('section');section.className='produce-group';
+    const heading=document.createElement('h3');heading.className='produce-group-title';heading.textContent=title;section.appendChild(heading);
+    const list=document.createElement('div');list.className='produce-list';
+    items.forEach(product=>{
+      productRows++;
+      const row=document.createElement('div');row.className='produce-item product-row';row.dataset.row=productRows;row.dataset.product=product.name;row.dataset.category=product.category||'';row.dataset.produceGroup=groupKey;
+      const name=document.createElement('div');name.className='produce-name';
+      const english=document.createElement('span');english.className='produce-name-en';english.textContent=product.name;name.appendChild(english);
+      const kannadaName=mfKannadaProduceName(product.name);
+      if(kannadaName){const kannada=document.createElement('span');kannada.className='produce-name-kn';kannada.lang='kn';kannada.textContent='('+kannadaName+')';name.appendChild(kannada)}
+      const qtyWrap=document.createElement('div');qtyWrap.className='produce-qty-wrap';
+      const qty=document.createElement('input');qty.className='p-qty produce-qty';qty.type='number';qty.min='0.01';qty.step='0.01';qty.inputMode='decimal';qty.placeholder='0';qty.setAttribute('aria-label',product.name+' quantity in kilograms');qty.addEventListener('input',updateProduceSummary);
+      const kg=document.createElement('span');kg.className='produce-kg';kg.textContent='kg';qtyWrap.append(qty,kg);
+      const nameSelect=document.createElement('select');nameSelect.className='p-name';nameSelect.hidden=true;nameSelect.tabIndex=-1;const option=document.createElement('option');option.value=product.name;option.textContent=product.name;option.selected=true;nameSelect.appendChild(option);
+      const unit=document.createElement('input');unit.className='p-unit';unit.value='kg';unit.type='hidden';
+      const freq=document.createElement('select');freq.className='p-freq';freq.hidden=true;freq.tabIndex=-1;['Daily','2-3/week','Weekly','As required'].forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;freq.appendChild(o)});
+      row.append(name,qtyWrap,nameSelect,unit,freq);list.appendChild(row);
+    });
+    if(!items.length){const empty=document.createElement('p');empty.className='sub';empty.style.padding='12px';empty.textContent='No active products in this category. Add products in Product Master.';list.appendChild(empty)}
+    section.appendChild(list);host.appendChild(section);
+  };
+  makeGroup('🥕 Vegetables & leafy greens',vegetables,'vegetables');
+  makeGroup('🍎 Fruits',fruits,'fruits');
+  updateProduceSummary();
+}
+function updateProduceSummary(){
+  const rows=[...document.querySelectorAll('#products .product-row')];
+  const filled=rows.filter(r=>Number(r.querySelector('.p-qty')?.value)>0);
+  const sumFor=(group)=>filled.filter(r=>r.dataset.produceGroup===group).reduce((sum,r)=>sum+Number(r.querySelector('.p-qty').value||0),0);
+  const countFor=(group)=>filled.filter(r=>r.dataset.produceGroup===group).length;
+  const vegTotal=sumFor('vegetables'),fruitTotal=sumFor('fruits');
+  const summary=document.getElementById('produceSummary');
+  if(summary){
+    summary.innerHTML='<span class=\"produce-total-veg\"><strong>Vegetables:</strong> '+countFor('vegetables')+' items · '+fmt(vegTotal)+' kg</span><span class=\"produce-total-fruit\"><strong>Fruits:</strong> '+countFor('fruits')+' items · '+fmt(fruitTotal)+' kg</span><span class=\"produce-total-all\"><strong>Overall:</strong> '+filled.length+' items · '+fmt(vegTotal+fruitTotal)+' kg</span>';
+  }
+}
+function finishProductDemand(){
+  const rows=[...document.querySelectorAll('#products .product-row')];
+  for(const r of rows){const q=r.querySelector('.p-qty').value.trim();if(q&&(!Number.isFinite(Number(q))||Number(q)<=0)){alert('Enter a quantity greater than zero for '+r.dataset.product+', or leave it blank.');r.querySelector('.p-qty').focus();return}}
+  if(!productData().length){alert('Enter a quantity in kg for at least one fruit or vegetable.');return}
+  next(4);
+}
+function productData(){return [...document.querySelectorAll('#products .product-row')].map(r=>({product:r.querySelector('.p-name').value.trim(),qty:Number(r.querySelector('.p-qty').value),unit:r.querySelector('.p-unit').value,frequency:r.querySelector('.p-freq').value})).filter(x=>x.product&&x.qty>0&&x.unit)}
+function val(id){return document.getElementById(id).value}
+async function saveSurvey(){
+  const phone=val('phone').replace(/\D/g,'');
+  if(!val('businessName')||!phone||!val('category')||!val('area')){alert('Please complete business name, phone, category and area.');showPage(1);return}
+  if(phone.length<10||phone.length>13){alert('Enter a valid phone number (10–13 digits, including country code if applicable).');showPage(1);return}
+  if(!selected('sources').length){alert('Select at least one current procurement source.');showPage(2);return}
+  const demandRows=[...document.querySelectorAll('#products .product-row')];
+  for(const r of demandRows){
+    const qty=r.querySelector('.p-qty').value.trim();
+    if(qty&&(!Number.isFinite(Number(qty))||Number(qty)<=0)){alert('Enter a quantity greater than zero for '+r.dataset.product+', or leave it blank.');showPage(3);return}
+  }
+  const demand=productData();
+  if(!demand.length){alert('Enter a quantity in kg for at least one fruit or vegetable before submitting.');showPage(3);return}
+  const paymentMethod=val('payment');
+  if(!paymentMethod){alert('Select the usual payment method.');showPage(4);return}
+  if(['Credit','Mixed'].includes(paymentMethod)&&!val('creditPeriod')){alert('Select the usual credit period.');showPage(4);return}
+  const u=JSON.parse(localStorage.getItem(USER)||'{}'), data=surveys();
+  if(!mfAuth || !mfAuth.currentUser){alert('You are not signed in to Firebase. Please sign in again before submitting.');return}
+  const duplicate=data.find(x=>x.phone&&x.phone.replace(/\D/g,'')===phone&&x.businessName.trim().toLowerCase()===val('businessName').trim().toLowerCase()&&x.recordStatus!=='deleted');
+  if(duplicate&&!confirm('A survey with the same business name and phone already exists (ID '+duplicate.id+'). Save another visit anyway?'))return;
+  const now=new Date(), localDate=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');
+  const item={id:'SUR-'+now.getTime(),date:localDate,createdAt:now.toLocaleString(),updatedAt:now.toISOString(),agentId:u.id,agentName:u.name,
+    businessKey:phone+'|'+val('businessName').trim().toLowerCase(),businessName:val('businessName').trim(),contactPerson:val('contactPerson').trim(),phone,category:val('category'),area:val('area').trim(),areaKey:val('area').trim().toLowerCase(),address:val('address').trim(),years:val('years'),monthly:val('monthly'),
+    sources:selected('sources'),supplier:val('supplier').trim(),supplierPhone:val('supplierPhone').trim(),delivery:val('delivery'),frequency:val('frequency'),deliveryTime:val('deliveryTime'),payment:val('payment'),creditPeriod:val('creditPeriod'),paymentOther:val('paymentOther').trim(),
+    products:productData(),problems:selected('problems'),biggestProblem:val('biggestProblem').trim(),switching:val('switching'),switchReason:val('switchReason').trim(),pilot:val('pilot'),followup:val('followup'),notes:val('notes').trim(),recordStatus:'active'};
+  item.createdByUid=u.uid||mfAuth.currentUser.uid;
+  try{
+    const ref=mfSurveyRef.push();
+    await ref.set(item);
+    item.firebaseKey=ref.key;
+    const updated=surveys().filter(x=>x.id!==item.id);updated.push(item);localStorage.setItem(KEY,JSON.stringify(updated));
+    document.getElementById('survey').innerHTML='<div class="success"><strong>Survey submitted successfully! ✓</strong><br>Your survey has been saved and synced online.<div class="sub" style="margin-top:8px">Survey ID: '+esc(item.id)+'</div></div><button class="btn primary" onclick="backDashboard()">Back to Dashboard</button>';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }catch(e){
+    console.error(e);
+    alert('Could not save to Firebase. Your survey was not submitted. Check your internet connection and database rules, then try again.\n'+e.message);
+  }
+}
+function openReports(){document.getElementById('dashboard').classList.add('hidden');document.getElementById('survey').classList.add('hidden');document.getElementById('reports').classList.remove('hidden');populateReportFilters();renderReports()}
+function closeReports(){document.getElementById('reports').classList.add('hidden');document.getElementById('dashboard').classList.remove('hidden');renderDashboard()}
+function populateReportFilters(){const data=surveys();const fill=(id,values,first)=>{const el=document.getElementById(id),old=el.value;el.innerHTML='<option value="">'+first+'</option>'+values.filter(Boolean).sort().map(v=>'<option value="'+esc(v)+'">'+esc(v)+'</option>').join('');if(values.includes(old))el.value=old};fill('rfAgent',[...new Set(data.map(x=>x.agentName+' · '+x.agentId))],'All agents');fill('rfCategory',[...new Set(data.map(x=>x.category))],'All categories');const names=(window.MangaluruFreshProducts?.getAll?.()||[]).map(x=>x.name);fill('rfProduct',[...new Set([...names,...data.flatMap(x=>(x.products||[]).map(p=>p.product))])],'All products')}
+function clearReportFilters(){['rfFrom','rfTo','rfArea'].forEach(id=>document.getElementById(id).value='');['rfAgent','rfCategory','rfProduct'].forEach(id=>document.getElementById(id).value='');renderReports()}
+function filteredSurveys(){const from=val('rfFrom'),to=val('rfTo'),agent=val('rfAgent'),area=val('rfArea').trim().toLowerCase(),cat=val('rfCategory'),prod=val('rfProduct');return surveys().filter(x=>(!from||x.date>=from)&&(!to||x.date<=to)&&(!agent||(x.agentName+' · '+x.agentId)===agent)&&(!area||(x.area||'').toLowerCase().includes(area))&&(!cat||x.category===cat)&&(!prod||(x.products||[]).some(p=>p.product===prod))&&x.recordStatus!=='deleted')}
+function weeklyFactor(f){return f==='Daily'?7:f==='2-3/week'?2.5:f==='Weekly'?1:null}
+function renderReports(){const data=filteredSurveys(), unique=new Set(data.map(x=>x.businessKey||((x.phone||'')+'|'+(x.businessName||'').toLowerCase()))).size, due=data.filter(x=>x.followup&&x.followup>=new Date().toISOString().slice(0,10)).length;
+ document.getElementById('reportStats').innerHTML=[['Surveys',data.length],['Unique businesses',unique],['Pilot interest',data.filter(x=>x.pilot==='Yes').length],['Follow-ups pending',due]].map(a=>'<div class="stat"><b>'+a[1]+'</b><span>'+a[0]+'</span></div>').join('');
+ const selectedProduct=val('rfProduct');const map=new Map();data.forEach(x=>(x.products||[]).forEach(p=>{if(!p.product||!Number(p.qty)||(selectedProduct&&p.product!==selectedProduct))return;const k=p.product+'||'+(p.unit||'unspecified');if(!map.has(k))map.set(k,{product:p.product,unit:p.unit||'unspecified',qty:0,weekly:0,weeklyKnown:true,entries:0,businesses:new Set(),frequencies:{}});const o=map.get(k);o.qty+=Number(p.qty);o.entries++;o.businesses.add(x.businessKey||x.phone||x.businessName);o.frequencies[p.frequency]=(o.frequencies[p.frequency]||0)+1;const factor=weeklyFactor(p.frequency);if(factor===null)o.weeklyKnown=false;else o.weekly+=Number(p.qty)*factor;}));
+ const demands=[...map.values()].sort((a,b)=>a.product.localeCompare(b.product));document.getElementById('demandReport').innerHTML=demands.length?'<div class="table-wrap"><table class="table"><thead><tr><th>Product</th><th>Total captured qty</th><th>Unit</th><th>Businesses</th><th>Estimated qty/week</th><th>Frequency breakdown</th></tr></thead><tbody>'+demands.map(o=>'<tr><td>'+esc(o.product)+'</td><td>'+fmt(o.qty)+'</td><td>'+esc(o.unit)+'</td><td>'+o.businesses.size+'</td><td>'+(o.weeklyKnown?fmt(o.weekly):'Partial / not estimable')+'</td><td>'+esc(Object.entries(o.frequencies).map(([k,v])=>k+': '+v).join(', '))+'</td></tr>').join('')+'</tbody></table></div>':'<p class="sub">No product demand in the selected surveys.</p>';
+ const group=(key)=>{const m={};data.forEach(x=>{const k=x[key]||'Not specified';m[k]=(m[k]||0)+1});return Object.entries(m).sort((a,b)=>b[1]-a[1])};const problems={};data.forEach(x=>(x.problems||[]).forEach(p=>problems[p]=(problems[p]||0)+1));const sources={};data.forEach(x=>(x.sources||[]).forEach(p=>sources[p]=(sources[p]||0)+1));
+ const opportunities=[['Would consider new supplier',data.filter(x=>['Definitely','Maybe','Only for some products'].includes(x.switching)).length],['Pilot supply: Yes',data.filter(x=>x.pilot==='Yes').length],['Pilot supply: Maybe',data.filter(x=>x.pilot==='Maybe').length],['Has follow-up date',data.filter(x=>x.followup).length]].filter(r=>r[1]>0);
+ document.getElementById('reportCharts').innerHTML=pieChartHTML('Business categories',group('category'))+pieChartHTML('Procurement sources',Object.entries(sources).sort((a,b)=>b[1]-a[1]))+pieChartHTML('Supplier problems',Object.entries(problems).sort((a,b)=>b[1]-a[1]))+pieChartHTML('Opportunity signals',opportunities);
+ document.getElementById('marketReport').innerHTML='<h3>By area</h3>'+simpleTable('Area','Surveys',group('area'))+'<h3>By business category</h3>'+simpleTable('Category','Surveys',group('category'))+'<h3>Current sourcing channels</h3>'+simpleTable('Source','Mentions',Object.entries(sources).sort((a,b)=>b[1]-a[1]))+'<h3>Supplier problems</h3>'+simpleTable('Problem','Mentions',Object.entries(problems).sort((a,b)=>b[1]-a[1]))+'<h3>Opportunity signals</h3>'+simpleTable('Signal','Surveys',[['Would consider new supplier',data.filter(x=>['Definitely','Maybe','Only for some products'].includes(x.switching)).length],['Pilot supply: Yes',data.filter(x=>x.pilot==='Yes').length],['Pilot supply: Maybe',data.filter(x=>x.pilot==='Maybe').length],['Has follow-up date',data.filter(x=>x.followup).length]]) ;
+ document.getElementById('recordsReport').innerHTML=data.length?'<div class="survey-record-list">'+data.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(x=>'<article class="survey-record-card"><div class="survey-record-head"><div class="survey-record-title">'+esc(x.businessName||'Unnamed business')+'</div><div class="survey-record-meta"><span class="survey-record-id">'+esc(x.id)+'</span><span>'+esc(x.date||'Date not recorded')+'</span></div></div><div class="survey-record-details"><div class="survey-record-field"><span>Phone</span><strong>'+esc(x.phone||'—')+'</strong></div><div class="survey-record-field"><span>Category</span><strong>'+esc(x.category||'—')+'</strong></div><div class="survey-record-field"><span>Area</span><strong>'+esc(x.area||'—')+'</strong></div><div class="survey-record-field"><span>Agent</span><strong>'+esc((x.agentName||'—')+(x.agentId?' ('+x.agentId+')':''))+'</strong></div><div class="survey-record-field"><span>Follow-up</span><strong>'+esc(x.followup||'—')+'</strong></div><div class="survey-record-field survey-record-products"><span>Products requested</span><strong>'+esc((x.products||[]).map(p=>p.product+' — '+p.qty+' '+p.unit+(p.frequency?' · '+p.frequency:'')).join('; ')||'No product details')+'</strong></div></div></article>').join('')+'</div>':'<p class="sub">No surveys match these filters.</p>';
+}
+
+function pieChartHTML(title,rows){
+ const sorted=(rows||[]).filter(r=>Number(r[1])>0).sort((a,b)=>Number(b[1])-Number(a[1]));
+ if(!sorted.length)return '<article class="card report-pie-card"><h3>'+esc(title)+'</h3><p class="sub">No data for the selected filters.</p></article>';
+ const maxSlices=5, top=sorted.slice(0,maxSlices), remainder=sorted.slice(maxSlices).reduce((sum,r)=>sum+Number(r[1]),0);if(remainder)top.push(['Other',remainder]);
+ const total=top.reduce((sum,r)=>sum+Number(r[1]),0), colors=['#176247','#f29d38','#4d8cc9','#d85b52','#8a6bc1','#8ba69a'];let angle=0;
+ const stops=top.map((r,i)=>{const start=angle;angle+=Number(r[1])/total*360;return colors[i%colors.length]+' '+start.toFixed(2)+'deg '+angle.toFixed(2)+'deg'}).join(',');
+ return '<article class="card report-pie-card"><h3>'+esc(title)+'</h3><div class="pie-layout"><div class="pie-chart" role="img" aria-label="'+esc(title)+': '+esc(top.map(r=>r[0]+' '+r[1]).join(', '))+'" style="background:conic-gradient('+stops+')"><span>'+fmt(total)+'</span></div><ul class="pie-legend">'+top.map((r,i)=>'<li><span class="pie-dot" style="background:'+colors[i%colors.length]+'"></span><span class="pie-label">'+esc(r[0])+'</span><strong>'+fmt(r[1])+'</strong></li>').join('')+'</ul></div></article>';
+}
+
+function fmt(n){return Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2})}
+function simpleTable(h1,h2,rows){return rows.length?'<div class="table-wrap"><table class="table"><thead><tr><th>'+esc(h1)+'</th><th>'+esc(h2)+'</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td></tr>').join('')+'</tbody></table></div>':'<p class="sub">No data</p>'}
+function csvDownload(filename,rows){const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function exportSurveysCSV(){
+ const data=(typeof filteredSurveys==='function'&& !document.getElementById('reports').classList.contains('hidden'))?filteredSurveys():surveys();
+ const headers=['Survey ID','Date','Agent Name','Agent ID','Business Name','Phone','Category','Area','Monthly Purchase Band','Procurement Sources','Current Supplier','Delivery Frequency','Payment Terms','Supplier Problems','Willing to Switch','Pilot Interest','Follow-up Date','Notes'];
+ csvDownload('mangaluru-fresh-business-summary.csv',[headers,...data.map(x=>[x.id,x.date,x.agentName,x.agentId,x.businessName,x.phone,x.category,x.area,x.monthly,(x.sources||[]).join('; '),x.supplier,x.frequency,x.payment,(x.problems||[]).join('; '),x.switching,x.pilot,x.followup,x.notes])]);
+}
+function exportFullSurveysCSV(){
+ const data=(typeof filteredSurveys==='function'&& !document.getElementById('reports').classList.contains('hidden'))?filteredSurveys():surveys();
+ const headers=['Survey ID','Date','Created At','Agent Name','Agent ID','Business Name','Contact Person','Phone','Category','Area','Address','Years in Business','Monthly Purchase Band','Sources','Supplier','Supplier Phone','Supplier Delivery','Delivery Frequency','Delivery Time','Payment Terms','Credit Period','Other Payment Details','Products JSON','Problems','Biggest Problem','Switching','Switch Reason','Pilot Interest','Follow-up Date','Notes'];
+ csvDownload('mangaluru-fresh-full-survey-backup.csv',[headers,...data.map(x=>[x.id,x.date,x.createdAt,x.agentName,x.agentId,x.businessName,x.contactPerson,x.phone,x.category,x.area,x.address,x.years,x.monthly,(x.sources||[]).join('; '),x.supplier,x.supplierPhone,x.delivery,x.frequency,x.deliveryTime,x.payment,x.creditPeriod||'',x.paymentOther||'',JSON.stringify(x.products||[]),(x.problems||[]).join('; '),x.biggestProblem,x.switching,x.switchReason,x.pilot,x.followup,x.notes])]);
+}
+
+function exportDemandCSV(){
+ const data=(typeof filteredSurveys==='function'&& !document.getElementById('reports').classList.contains('hidden'))?filteredSurveys():surveys();
+ const rows=[['Survey ID','Date','Agent Name','Business Name','Phone','Area','Product','Quantity','Unit','Frequency']];
+ const selectedProduct=(typeof val==='function'&& !document.getElementById('reports').classList.contains('hidden'))?val('rfProduct'):'';
+ data.forEach(x=>(x.products||[]).forEach(p=>{if(!p.product||p.qty===undefined||p.qty===null||p.qty===''||(selectedProduct&&p.product!==selectedProduct))return;rows.push([x.id,x.date,x.agentName,x.businessName,x.phone,x.area,p.product,p.qty,p.unit||'unspecified',p.frequency||'']);}));
+ csvDownload('mangaluru-fresh-product-demand.csv',rows);
+}
+function backDashboard(){location.reload()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+(function bootFirebase(){
+  try{
+    mfInitFirebase();
+    mfAuth.onAuthStateChanged(user=>{
+      const profile=JSON.parse(localStorage.getItem(USER)||'null');
+      if(user && profile){
+        profile.uid=user.uid; profile.email=user.email||profile.email; localStorage.setItem(USER,JSON.stringify(profile));
+        mfStartSharedListeners(); showApp();
+      } else if(!user){
+        mfStopSharedListeners(); localStorage.removeItem(USER);
+        document.getElementById('loginView').classList.remove('hidden');
+        document.getElementById('appView').classList.add('hidden');
+      }
+    });
+  }catch(e){console.error(e);mfShowLoginError('Firebase could not initialise. Check internet access and app configuration.')}
+})();
+</script>
+
+<div id="productMasterScreen" class="pm-screen" aria-hidden="true">
+  <div class="pm-wrap">
+    <div class="pm-top">
+      <button class="pm-back" type="button" onclick="closeProductMaster()" aria-label="Back">←</button>
+      <div class="pm-heading"><h2>Product Master</h2><p>Manage the fruits and vegetables agents can select</p></div>
+    </div>
+    <div class="pm-card">
+      <h3 id="pmFormTitle">Add a product</h3>
+      <form id="pmForm">
+        <div class="pm-form-grid">
+          <label class="pm-field pm-wide">Product name<input id="pmName" required maxlength="80" placeholder="e.g. Tomato"></label>
+          <label class="pm-field">Category<select id="pmCategory" required><option value="Vegetable">Vegetable</option><option value="Fruit">Fruit</option><option value="Leafy greens">Leafy greens</option><option value="Other">Other</option></select></label>
+          <label class="pm-field">Default unit<select id="pmUnit" required><option value="kg">Kilogram (kg)</option><option value="g">Gram (g)</option><option value="piece">Piece</option><option value="dozen">Dozen</option><option value="bunch">Bunch</option><option value="box">Box</option><option value="crate">Crate</option><option value="bag">Bag</option></select></label>
+          <label class="pm-field pm-wide">Optional local name / variety<input id="pmAlias" maxlength="80" placeholder="e.g. Bangaluru tomato"></label>
+        </div>
+        <button class="pm-primary" type="submit" id="pmSaveBtn">Save product</button>
+      </form>
+    </div>
+    <div class="pm-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px">
+        <h3 style="margin:0">Product catalogue</h3><span id="pmCount" class="pm-badge">0 products</span>
+      </div>
+      <input id="pmSearch" class="pm-search" placeholder="Search product name…" autocomplete="off">
+      <div id="pmList" class="pm-list"></div>
+    </div>
+    <p style="color:#7a877f;font-size:10px;line-height:1.5">Product Master syncs to Firebase after an authorised agent signs in. Changes are shared with other signed-in devices.</p>
+  </div>
+</div>
+
+<div id="productPickerScreen" class="pm-screen" aria-hidden="true">
+  <div class="pm-wrap">
+    <div class="pm-top">
+      <button class="pm-back" type="button" onclick="closeProductPicker()" aria-label="Back">←</button>
+      <div class="pm-heading"><h2>Select produce</h2><p>Choose from Product Master</p></div>
+    </div>
+    <input id="pickerSearch" class="pm-search" placeholder="Search fruits or vegetables…" autocomplete="off">
+    <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px">
+      <button class="pm-secondary" type="button" onclick="setPickerCategory('All')">All</button>
+      <button class="pm-secondary" type="button" onclick="setPickerCategory('Fruit')">Fruits</button>
+      <button class="pm-secondary" type="button" onclick="setPickerCategory('Vegetable')">Vegetables</button>
+      <button class="pm-secondary" type="button" onclick="setPickerCategory('Leafy greens')">Leafy greens</button>
+    </div>
+    <div id="pickerList" class="pm-pick-list"></div>
+  </div>
+</div>
+
+
+<script>
+(function(){
+  const PM_KEY='mangaluruFreshProductMasterV1';
+  const seed=[
+    ['Tomato','Vegetable','kg'],['Onion','Vegetable','kg'],['Potato','Vegetable','kg'],['Green chilli','Vegetable','kg'],
+    ['Carrot','Vegetable','kg'],['Beans','Vegetable','kg'],['Cabbage','Vegetable','kg'],['Cauliflower','Vegetable','piece'],
+    ['Brinjal','Vegetable','kg'],['Ladies finger','Vegetable','kg'],['Cucumber','Vegetable','kg'],['Drumstick','Vegetable','kg'],
+    ['Bottle gourd','Vegetable','piece'],['Ridge gourd','Vegetable','kg'],['Bitter gourd','Vegetable','kg'],['Pumpkin','Vegetable','kg'],
+    ['Capsicum','Vegetable','kg'],['Beetroot','Vegetable','kg'],['Radish','Vegetable','kg'],['Coriander leaves','Leafy greens','bunch'],
+    ['Spinach','Leafy greens','bunch'],['Mint leaves','Leafy greens','bunch'],['Curry leaves','Leafy greens','bunch'],['Moringa leaves','Leafy greens','bunch'],
+    ['Banana','Fruit','dozen'],['Apple','Fruit','kg'],['Orange','Fruit','kg'],['Sweet lime','Fruit','kg'],['Mango','Fruit','kg'],
+    ['Papaya','Fruit','kg'],['Pineapple','Fruit','piece'],['Watermelon','Fruit','kg'],['Grapes','Fruit','kg'],['Pomegranate','Fruit','kg'],
+    ['Guava','Fruit','kg'],['Lemon','Fruit','kg'],['Coconut','Fruit','piece']
+  ];
+  let editingId=null, pickerTarget=null, pickerCategory='All';
+  const $=id=>document.getElementById(id);
+  const read=()=>{try{return JSON.parse(localStorage.getItem(PM_KEY)||'null')||seed.map((x,i)=>({id:'PM-'+(i+1),name:x[0],category:x[1],unit:x[2],alias:'',active:true}));}catch(e){return seed.map((x,i)=>({id:'PM-'+(i+1),name:x[0],category:x[1],unit:x[2],alias:'',active:true}));}};
+  const save=items=>{
+    localStorage.setItem(PM_KEY,JSON.stringify(items));
+    if(window.mfAuth && window.mfAuth.currentUser && window.mfProductRef){
+      const obj={};items.forEach(x=>{obj[x.id]=x});
+      window.mfProductRef.set(obj).catch(e=>{console.error('Product Master Firebase save failed:',e);alert('Product Master could not sync to Firebase. Check database rules and connection.');});
+    }
+  };
+  function ensure(){if(!localStorage.getItem(PM_KEY))save(read());}
+  function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  window.openProductMaster=function(){
+    ensure(); $('productMasterScreen').classList.add('pm-open'); $('productMasterScreen').setAttribute('aria-hidden','false');
+    $('pmName').focus(); renderMaster();
+  };
+  window.closeProductMaster=function(){
+    $('productMasterScreen').classList.remove('pm-open'); $('productMasterScreen').setAttribute('aria-hidden','true'); resetForm();
+  };
+  function resetForm(){editingId=null;$('pmForm').reset();$('pmFormTitle').textContent='Add a product';$('pmSaveBtn').textContent='Save product';}
+  function renderMaster(){
+    const items=read(), query=$('pmSearch').value.trim().toLowerCase();
+    const visible=items.filter(x=>(x.name+' '+(x.alias||'')+' '+x.category).toLowerCase().includes(query));
+    $('pmCount').textContent=items.filter(x=>x.active!==false).length+' active';
+    $('pmList').innerHTML=visible.map(x=>`<div class="pm-item"><div class="pm-item-main"><div class="pm-item-name">${safe(x.name)}</div><div class="pm-item-meta">${safe(x.category)} · ${safe(x.unit)}${x.alias?' · '+safe(x.alias):''} ${x.active===false?'· Inactive':''}</div></div><button type="button" class="pm-secondary" data-edit="${safe(x.id)}">Edit</button><button type="button" class="pm-secondary" data-toggle="${safe(x.id)}">${x.active===false?'Activate':'Disable'}</button></div>`).join('')||'<div class="pm-empty">No matching products.</div>';
+    $('pmList').querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editItem(b.dataset.edit));
+    $('pmList').querySelectorAll('[data-toggle]').forEach(b=>b.onclick=()=>toggleItem(b.dataset.toggle));
+  }
+  function editItem(id){const x=read().find(p=>p.id===id);if(!x)return;editingId=id;$('pmName').value=x.name;$('pmCategory').value=x.category;$('pmUnit').value=x.unit;$('pmAlias').value=x.alias||'';$('pmFormTitle').textContent='Edit product';$('pmSaveBtn').textContent='Update product';window.scrollTo({top:0,behavior:'smooth'});}
+  function toggleItem(id){const a=read();const x=a.find(p=>p.id===id);if(!x)return;x.active=x.active===false;save(a);renderMaster();renderPicker();}
+  $('pmForm').addEventListener('submit',e=>{
+    e.preventDefault();const name=$('pmName').value.trim();if(!name)return;
+    const items=read();const duplicate=items.find(x=>x.name.toLowerCase()===name.toLowerCase()&&x.id!==editingId);
+    if(duplicate){alert('This product already exists in Product Master. Edit the existing item instead.');return;}
+    const item={id:editingId||('PM-'+Date.now()),name,category:$('pmCategory').value,unit:$('pmUnit').value,alias:$('pmAlias').value.trim(),active:true};
+    if(editingId){const i=items.findIndex(x=>x.id===editingId);items[i]=item;}else items.unshift(item);
+    save(items);resetForm();renderMaster();renderPicker();
+  });
+  $('pmSearch').addEventListener('input',renderMaster);
+  window.setPickerCategory=function(cat){pickerCategory=cat;renderPicker();};
+  window.openProductPicker=function(target){
+    ensure();pickerTarget=target;pickerCategory='All';$('pickerSearch').value='';
+    $('productPickerScreen').classList.add('pm-open');$('productPickerScreen').setAttribute('aria-hidden','false');renderPicker();
+  };
+  window.closeProductPicker=function(){$('productPickerScreen').classList.remove('pm-open');$('productPickerScreen').setAttribute('aria-hidden','true');pickerTarget=null;};
+  function renderPicker(){
+    const q=$('pickerSearch').value.trim().toLowerCase();
+    const items=read().filter(x=>x.active!==false&&(pickerCategory==='All'||x.category===pickerCategory)&&(x.name+' '+(x.alias||'')).toLowerCase().includes(q));
+    $('pickerList').innerHTML=items.map(x=>`<button type="button" class="pm-pick-row" data-pick="${safe(x.id)}"><span style="font-size:20px">${x.category==='Fruit'?'🍎':x.category==='Leafy greens'?'🥬':'🥕'}</span><span style="flex:1;min-width:0"><strong>${safe(x.name)}</strong><small>${safe(x.category)} · Default unit: ${safe(x.unit)}${x.alias?' · '+safe(x.alias):''}</small></span><span aria-hidden="true">＋</span></button>`).join('')||'<div class="pm-empty">No products found. Add it in Product Master first.</div>';
+    $('pickerList').querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>selectProduct(b.dataset.pick));
+  }
+  function selectProduct(id){
+    const product=read().find(x=>x.id===id);if(!product||!pickerTarget)return;
+    const target=pickerTarget;
+    if(typeof target==='function')target(product);
+    else if(target.nameInputId){
+      const name=$(target.nameInputId);if(name)name.value=product.name;
+      if(target.unitInputId){const unit=$(target.unitInputId);if(unit)unit.value=product.unit;}
+      if(target.categoryInputId){const cat=$(target.categoryInputId);if(cat)cat.value=product.category;}
+      if(target.onSelect)target.onSelect(product);
+    }else{
+      document.dispatchEvent(new CustomEvent('mangaluruFreshProductSelected',{detail:{product,target}}));
+    }
+    closeProductPicker();
+  }
+  $('pickerSearch').addEventListener('input',renderPicker);
+  window.addEventListener('keydown',e=>{if(e.key==='Escape'){closeProductPicker();closeProductMaster();}});
+  window.MangaluruFreshProducts={getAll:()=>read().filter(x=>x.active!==false),openPicker:window.openProductPicker,openMaster:window.openProductMaster};
+  ensure();
+})();
+</script>
+
+
+<style>
+#mfAgentMasterModal{position:fixed;inset:0;z-index:9999;background:rgba(10,25,20,.58);display:none;align-items:center;justify-content:center;padding:16px}
+#mfAgentMasterModal .mf-am-card{background:#fff;color:#14251f;border-radius:18px;padding:20px;width:min(720px,100%);max-height:90vh;overflow:auto;box-shadow:0 20px 70px rgba(0,0,0,.25)}
+#mfAgentMasterModal input,#mfAgentMasterModal select{width:100%;min-width:0;padding:11px;border:1px solid #cdd8d2;border-radius:10px;margin:5px 0 12px}
+#mfAgentMasterModal .mf-am-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#mfAgentMasterModal .mf-am-table{width:100%;border-collapse:collapse;font-size:14px}
+#mfAgentMasterModal .mf-am-table th,#mfAgentMasterModal .mf-am-table td{text-align:left;padding:9px;border-bottom:1px solid #e4ebe7;overflow-wrap:anywhere}
+@media(max-width:520px){#mfAgentMasterModal .mf-am-grid{grid-template-columns:1fr}#mfAgentMasterModal .mf-am-card{padding:14px}}
+</style>
+<div id="mfAgentMasterModal" role="dialog" aria-modal="true" aria-labelledby="mfAgentMasterTitle">
+ <div class="mf-am-card">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+   <h2 id="mfAgentMasterTitle" style="margin:0">Agent Master</h2>
+   <button class="btn" type="button" onclick="closeAgentMaster()">Close</button>
+  </div>
+  <p class="sub">Manage the central agent directory in Firebase. Agent ID 1614 (Samrajya) is reserved as Admin.</p>
+  <form id="mfAgentForm" onsubmit="saveAgentMasterRecord(event)">
+   <div class="mf-am-grid">
+    <label>Agent ID (same as mobile number)<input id="mfAgentId" required maxlength="10" inputmode="numeric" pattern="[0-9]{10}" placeholder="10-digit mobile number" oninput="syncAgentMasterMobileFromId()"></label>
+    <label>Agent name<input id="mfAgentName" required maxlength="100" placeholder="Full name"></label>
+    <label>Mobile number<input id="mfAgentMobile" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" oninput="syncAgentMasterIdFromMobile()"></label>
+    <label>Set / change PIN<input id="mfAgentPin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="8" minlength="4" placeholder="4–8 digit PIN"></label>
+    <label>Role<select id="mfAgentRole"><option value="agent">Agent</option><option value="manager">Manager</option><option value="admin">Admin</option></select></label>
+    <label>Status<select id="mfAgentActive"><option value="true">Active</option><option value="false">Inactive</option></select></label>
+   </div>
+   <button class="btn primary" type="submit">Save agent</button>
+   <button class="btn" type="button" onclick="resetAgentForm()">Clear</button>
+   <p id="mfAgentMessage" class="sub" role="status"></p>
+  </form>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0">
+   <input id="mfAgentSearch" placeholder="Search agents…" oninput="renderAgentMasterList()" style="flex:1;min-width:180px;margin:0">
+   <button class="btn" type="button" onclick="loadAgentMaster()">Refresh</button>
+  </div>
+  <div id="mfAgentList">Loading agents…</div>
+ </div>
+</div>
+<script>
+const MF_AGENT_CACHE='mfAgentMasterV1';
+let mfAgentRecords={};
+function openAgentMaster(){
+ const u=JSON.parse(localStorage.getItem('mf_v1_user')||'null');
+ if(!u){alert('Sign in first.');return}
+ const isAdmin=(u.role==='admin'||String(u.id)==='1614');
+ if(!isAdmin){alert('Only an Admin can access Agent Master.');return}
+ document.getElementById('mfAgentMasterModal').style.display='flex';
+ loadAgentMaster();
+}
+function closeAgentMaster(){document.getElementById('mfAgentMasterModal').style.display='none'}
+function resetAgentForm(){document.getElementById('mfAgentForm').reset();document.getElementById('mfAgentId').disabled=false;document.getElementById('mfAgentMessage').textContent=''}
+function loadAgentMaster(){
+ const list=document.getElementById('mfAgentList');
+ if(!window.mfDb || !window.mfAuth || !window.mfAuth.currentUser){list.textContent='Firebase session not ready. Sign in and retry.';return}
+ list.textContent='Loading agents from Firebase…';
+ window.mfDb.ref('mangaluruFresh/agents').once('value').then(snap=>{
+  mfAgentRecords=snap.val()||{};
+  localStorage.setItem(MF_AGENT_CACHE,JSON.stringify(mfAgentRecords));
+  renderAgentMasterList();
+ }).catch(e=>{list.textContent='Could not load Agent Master: '+e.message});
+}
+function renderAgentMasterList(){
+ const root=document.getElementById('mfAgentList');if(!root)return;
+ const q=(document.getElementById('mfAgentSearch')?.value||'').trim().toLowerCase();
+ const items=Object.entries(mfAgentRecords).filter(([id,a])=>(id+' '+(a.name||'')+' '+(a.role||'')).toLowerCase().includes(q)).sort((a,b)=>a[0].localeCompare(b[0]));
+ if(!items.length){root.innerHTML='<p class="sub">No agents found. Add the first agent above.</p>';return}
+ const currentUser=JSON.parse(localStorage.getItem('mf_v1_user')||'null');const canDelete=!!currentUser&&(currentUser.role==='admin'||String(currentUser.id)==='1614');
+ root.innerHTML='<div style="overflow:auto"><table class="mf-am-table"><thead><tr><th>Agent ID</th><th>Name</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody>'+items.map(([id,a])=>`<tr><td>${mfAgentEsc(id)}</td><td>${mfAgentEsc(a.name||'')}</td><td>${mfAgentEsc(a.role||'agent')}</td><td>${a.active===false?'Inactive':'Active'}</td><td><button class="btn" type="button" onclick="editAgentMasterRecord('${mfAgentEscAttr(id)}')">Edit</button> <button class="btn" type="button" onclick="toggleAgentActive('${mfAgentEscAttr(id)}')">${a.active===false?'Activate':'Deactivate'}</button> ${canDelete?`<button class="btn" type="button" style="background:#b42318;color:#fff" onclick="deleteAgentMasterRecord('${mfAgentEscAttr(id)}')">Delete</button>`:''}</td></tr>`).join('')+'</tbody></table></div>';
+}
+function mfAgentEsc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function mfAgentEscAttr(v){return String(v??'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+function editAgentMasterRecord(id){
+ const a=mfAgentRecords[id];if(!a)return;
+ document.getElementById('mfAgentId').value=id;document.getElementById('mfAgentId').disabled=true;
+ document.getElementById('mfAgentName').value=a.name||'';
+ document.getElementById('mfAgentMobile').value=a.phone||a.mobile||'';
+ document.getElementById('mfAgentRole').value=a.role||'agent';
+ document.getElementById('mfAgentActive').value=String(a.active!==false);
+ document.getElementById('mfAgentMessage').textContent='Editing '+id;
+}
+async function saveAgentMasterRecord(e){
+ e.preventDefault();
+ const mobile=(document.getElementById('mfAgentMobile')?.value||'').replace(/\D/g,'').trim();
+ const id=mobile||document.getElementById('mfAgentId').value.trim(),name=document.getElementById('mfAgentName').value.trim();
+ document.getElementById('mfAgentId').value=id;
+ const role=(id==='1614'?'admin':document.getElementById('mfAgentRole').value),active=document.getElementById('mfAgentActive').value==='true';
+ if(!id||!name)return;
+ const old=mfAgentRecords[id];
+ if(mobile && !/^\d{10}$/.test(mobile)){document.getElementById('mfAgentMessage').textContent='Enter a valid 10-digit mobile number.';return}
+  const pin=(document.getElementById('mfAgentPin')?.value||'').trim();
+  if(pin && !/^\d{4,8}$/.test(pin)){document.getElementById('mfAgentMessage').textContent='PIN must be 4–8 digits.';return}
+  const record={name,role:id==='1614'?'admin':role,active:id==='1614'?true:active,phone:mobile||old?.phone||old?.mobile||'',mobile:mobile||old?.mobile||old?.phone||'',createdAt:old?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()};
+  if(pin)record.pinHash=await mfHashPin(pin);else if(old?.pinHash)record.pinHash=old.pinHash;
+ try{
+  await window.mfDb.ref('mangaluruFresh/agents/'+id.replace(/[.#$\[\]/]/g,'_')).set(record);
+  mfAgentRecords[id]=record;localStorage.setItem(MF_AGENT_CACHE,JSON.stringify(mfAgentRecords));
+  document.getElementById('mfAgentMessage').textContent='Agent saved to Firebase.';
+  resetAgentForm();renderAgentMasterList();
+ }catch(err){document.getElementById('mfAgentMessage').textContent='Save failed: '+err.message}
+}
+async function toggleAgentActive(id){
+ const a=mfAgentRecords[id];if(!a)return;
+ if(String(id)==='1614'||String(a.role||'').toLowerCase()==='admin'){
+  alert('The Admin account is protected and cannot be deactivated.');return;
+ }
+ const next={...a,active:a.active===false,updatedAt:new Date().toISOString()};
+ try{await window.mfDb.ref('mangaluruFresh/agents/'+id.replace(/[.#$\[\]/]/g,'_')).set(next);mfAgentRecords[id]=next;renderAgentMasterList()}
+ catch(e){alert('Could not update agent: '+e.message)}
+}
+async function deleteAgentMasterRecord(id){
+ const u=JSON.parse(localStorage.getItem('mf_v1_user')||'null');
+ if(!u || !(u.role==='admin'||String(u.id)==='1614')){alert('Only an Admin can delete agents.');return}
+ const a=mfAgentRecords[id];if(!a)return;
+ if(String(id)==='1614'||String(a.role||'').toLowerCase()==='admin'){
+  alert('The Admin account is protected and cannot be deleted.');return;
+ }
+ const confirmed=confirm('Delete agent '+(a.name||id)+' ('+id+') from Agent Master?\n\nOnly the agent account will be removed. All surveys and historical records submitted by this agent will remain in Firebase and will not be deleted.');
+ if(!confirmed)return;
+ try{
+  const key=String(id).replace(/[.#$\[\]/]/g,'_');
+  await window.mfDb.ref('mangaluruFresh/agents/'+key).remove();
+  delete mfAgentRecords[id];
+  localStorage.setItem(MF_AGENT_CACHE,JSON.stringify(mfAgentRecords));
+  if(document.getElementById('mfAgentId').value===String(id))resetAgentForm();
+  renderAgentMasterList();
+  const msg=document.getElementById('mfAgentMessage');if(msg)msg.textContent='Agent account deleted. Existing surveys and historical records were preserved.';
+ }catch(e){alert('Could not delete agent: '+e.message)}
+}
+</script>
+
+<script>
+(function enforceSamrajyaAdmin(){
+  const originalOpenAgentMaster = window.openAgentMaster;
+  window.openAgentMaster = function(){
+    if (typeof originalOpenAgentMaster === 'function') originalOpenAgentMaster();
+    const idField=document.getElementById('mfAgentId');
+    const roleField=document.getElementById('mfAgentRole');
+    if(idField && roleField && idField.value.trim()==='1614'){
+      roleField.value='admin';
+      roleField.disabled=true;
+    } else if(roleField) {
+      roleField.disabled=false;
+    }
+  };
+  const originalEditAgent = window.editAgentMasterRecord;
+  if(typeof originalEditAgent==='function'){
+    window.editAgentMasterRecord=function(id){
+      originalEditAgent(id);
+      const roleField=document.getElementById('mfAgentRole');
+      if(roleField && String(id)==='1614'){roleField.value='admin';roleField.disabled=true;}
+      else if(roleField){roleField.disabled=false;}
+    };
+  }
+  const originalResetAgent = window.resetAgentForm;
+  if(typeof originalResetAgent==='function'){
+    window.resetAgentForm=function(){
+      originalResetAgent();
+      const roleField=document.getElementById('mfAgentRole');
+      const idField=document.getElementById('mfAgentId');
+      if(roleField)roleField.disabled=false;
+      if(idField)idField.disabled=false;
+    };
+  }
+})();
+</script>
+
+
+<style>
+#mfAdminPanelModal{position:fixed;inset:0;z-index:10000;background:rgba(8,24,18,.62);display:none;align-items:center;justify-content:center;padding:14px}
+#mfAdminPanelModal .mf-admin-card{background:#fff;color:#14251f;border-radius:18px;padding:20px;width:min(520px,100%);max-height:88vh;overflow:auto;box-shadow:0 24px 80px rgba(0,0,0,.3)}
+#mfAdminPanelModal .mf-admin-stat{background:#f1f6f3;border:1px solid #e0e9e3;border-radius:14px;padding:16px;margin:16px 0}
+#mfAdminPanelModal .mf-admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+@media(max-width:650px){#mfAdminPanelModal .mf-admin-card{padding:16px}}
+</style>
+<div id="mfAdminPanelModal" role="dialog" aria-modal="true" aria-labelledby="mfAdminPanelTitle">
+ <div class="mf-admin-card">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+   <div><h2 id="mfAdminPanelTitle" style="margin:0">Admin Panel</h2><p class="sub" style="margin:6px 0 0">Overview of shared survey activity.</p></div>
+   <button class="btn" type="button" onclick="closeAdminPanel()">Close</button>
+  </div>
+  <div class="mf-admin-stat"><div class="sub">Total survey records</div><strong id="mfAdminSurveyCount" style="font-size:30px;display:block;margin-top:4px">—</strong><p id="mfAdminPanelStatus" class="sub" style="margin:6px 0 0">Loading survey data…</p></div>
+  <p class="sub">Agent details and account management are available in <strong>Agent Master</strong>. This panel no longer stores or edits agent information.</p>
+  <div class="mf-admin-actions"><button class="btn primary" type="button" onclick="openReports();closeAdminPanel()">Open Reports &amp; Export</button><button class="btn" type="button" onclick="loadAdminPanel()">Refresh</button></div>
+ </div>
+</div>
+<script>
+function mfIsAdmin(){
+ const u=JSON.parse(localStorage.getItem('mf_v1_user')||'null');
+ return !!u && (String(u.id)==='1614' || u.role==='admin');
+}
+function openAdminPanel(){
+ if(!mfIsAdmin()){alert('Admin access required. Sign in with the administrator account.');return}
+ const m=document.getElementById('mfAdminPanelModal');if(m)m.style.display='flex';
+ loadAdminPanel();
+}
+function closeAdminPanel(){const m=document.getElementById('mfAdminPanelModal');if(m)m.style.display='none'}
+function loadAdminPanel(){
+ const count=document.getElementById('mfAdminSurveyCount'),status=document.getElementById('mfAdminPanelStatus');
+ if(!count||!status)return;
+ if(!mfIsAdmin()){status.textContent='Admin access required.';count.textContent='—';return}
+ if(!window.mfDb||!window.mfAuth||!window.mfAuth.currentUser){status.textContent='Firebase session is not ready. Please retry.';count.textContent='—';return}
+ status.textContent='Loading shared survey records…';
+ window.mfDb.ref('mangaluruFresh/surveys').once('value').then(snap=>{
+  const records=snap.val()||{};count.textContent=Object.keys(records).length;status.textContent='Survey data loaded from Firebase.';
+ }).catch(err=>{count.textContent='—';status.textContent='Could not load survey data: '+(err.message||'Unknown error')});
+}
+</script>
+
+<script>
+async function mfHashPin(pin){
+  const bytes=new TextEncoder().encode(String(pin));
+  const digest=await crypto.subtle.digest('SHA-256',bytes);
+  return Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+</script>
+
+
+<script>
+function syncAdminAgentIdFromMobile(){
+ const m=document.getElementById('mfAdminAgentPhone'),i=document.getElementById('mfAdminAgentId');
+ if(m&&i&&!i.disabled)i.value=m.value.replace(/\D/g,'').slice(0,10);
+}
+function syncAdminMobileFromId(){
+ const i=document.getElementById('mfAdminAgentId'),m=document.getElementById('mfAdminAgentPhone');
+ if(i&&m&&!m.disabled)m.value=i.value.replace(/\D/g,'').slice(0,10);
+}
+function syncAgentMasterIdFromMobile(){
+ const m=document.getElementById('mfAgentMobile'),i=document.getElementById('mfAgentId');
+ if(m&&i&&!i.disabled)i.value=m.value.replace(/\D/g,'').slice(0,10);
+}
+function syncAgentMasterMobileFromId(){
+ const i=document.getElementById('mfAgentId'),m=document.getElementById('mfAgentMobile');
+ if(i&&m&&!m.disabled)m.value=i.value.replace(/\D/g,'').slice(0,10);
+}
+</script>
+
+
+<script>
+function toggleCreditPeriod(){
+  const method=document.getElementById('payment')?.value||'';
+  const wrap=document.getElementById('creditPeriodWrap');
+  const period=document.getElementById('creditPeriod');
+  const needsCredit=['Credit','Mixed'].includes(method);
+  if(wrap)wrap.classList.toggle('hidden',!needsCredit);
+  if(period){period.required=needsCredit;if(!needsCredit)period.value='';}
+}
+</script>
+
+</body>
+</html>

@@ -10,7 +10,9 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="apple-touch-icon" href="./icons/mf-192.png">
 
-<title>Mangaluru Fresh — B2B Market Survey</title>
+<title>Mangaluru Fresh — B2B Market Survey v0.0.1</title>
+<meta name="app-version" content="0.0.1">
+<!-- Mangaluru Fresh release v0.0.1 | Baseline release -->
 <style>
 :root{--green:#174d38;--green2:#23684b;--cream:#f7f3e8;--orange:#e8892f;--ink:#17231e;--muted:#66736c;--line:#dfe6e1;--white:#fff;--danger:#b42318}
 *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f3f6f4;color:var(--ink)}
@@ -874,6 +876,9 @@ body{background:var(--mf-bg)}
     </section>
 
     <section id="survey" class="hidden">
+      <div class="survey-nav-back" style="display:flex;justify-content:flex-start;margin:0 0 12px">
+        <button type="button" class="btn secondary" onclick="returnToDashboard()" aria-label="Return to dashboard">← Back to Dashboard</button>
+      </div>
       <div class="stepper">
         <button type="button" class="step" data-step="1" onclick="next(1)" aria-label="Go to Business details">1 Business</button><button type="button" class="step" data-step="2" onclick="next(2)" aria-label="Go to Procurement details">2 Procurement</button><button type="button" class="step" data-step="3" onclick="next(3)" aria-label="Go to Product demand">3 Products</button><button type="button" class="step" data-step="4" onclick="next(4)" aria-label="Go to Supplier problems">4 Problems</button><button type="button" class="step" data-step="5" onclick="next(5)" aria-label="Go to Opportunity and follow-up">5 Opportunity</button>
       </div>
@@ -1055,6 +1060,19 @@ function renderDashboard(){
   document.getElementById('recent').innerHTML=recent.length?'<div class="table-wrap"><table class="table"><thead><tr><th>Business</th><th>Category</th><th>Area</th><th>Agent</th><th>Created</th></tr></thead><tbody>'+recent.map(x=>`<tr><td>${esc(x.businessName)}</td><td>${esc(x.category)}</td><td>${esc(x.area)}</td><td>${esc(x.agentName||x.agentId||'Unknown')}</td><td>${esc(x.createdAt)}</td></tr>`).join('')+'</tbody></table></div>':'<p class="sub">No surveys yet. Start the first field survey.</p>';
 }
 function startSurvey(){document.getElementById('dashboard').classList.add('hidden');document.getElementById('reports').classList.add('hidden');document.getElementById('survey').classList.remove('hidden');resetSurvey();showPage(1)}
+function returnToDashboard(){
+  const form=document.getElementById('surveyForm');
+  const hasInput=[...form.querySelectorAll('input,select,textarea')].some(el=>{
+    if(el.type==='checkbox'||el.type==='radio') return el.checked;
+    return String(el.value||'').trim()!=='';
+  }) || document.querySelectorAll('.choice.active').length>0;
+  if(hasInput && !window.confirm('Return to the dashboard? Unsaved survey details will be lost.')) return;
+  document.getElementById('survey').classList.add('hidden');
+  document.getElementById('reports').classList.add('hidden');
+  document.getElementById('dashboard').classList.remove('hidden');
+  renderDashboard();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 function resetSurvey(){
   document.getElementById('surveyForm').reset();
   document.querySelectorAll('.choice.active').forEach(x=>x.classList.remove('active'));
@@ -1216,7 +1234,7 @@ function exportDemandCSV(){
  data.forEach(x=>(x.products||[]).forEach(p=>{if(!p.product||p.qty===undefined||p.qty===null||p.qty===''||(selectedProduct&&p.product!==selectedProduct))return;rows.push([x.id,x.date,x.agentName,x.businessName,x.phone,x.area,p.product,p.qty,p.unit||'unspecified',p.frequency||'']);}));
  csvDownload('mangaluru-fresh-product-demand.csv',rows);
 }
-function backDashboard(){location.reload()}
+function backDashboard(){document.getElementById('survey').classList.add('hidden');document.getElementById('reports').classList.add('hidden');document.getElementById('dashboard').classList.remove('hidden');renderDashboard();window.scrollTo({top:0,behavior:'smooth'})}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
 (function bootFirebase(){
   try{

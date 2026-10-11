@@ -1,0 +1,26 @@
+{
+  "id": "./",
+  "name": "Mangaluru Fresh \u2014 B2B Market Survey",
+  "short_name": "Mangaluru Fresh",
+  "description": "B2B fresh produce market survey and demand mapping for Mangaluru.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f8f6",
+  "theme_color": "#14543d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icons/mf-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/mf-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
